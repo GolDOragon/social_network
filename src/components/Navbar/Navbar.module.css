@@ -1,0 +1,15 @@
+.nav {
+    grid-area: n;
+    background-color: burlywood;
+    padding: 1rem;
+}
+
+.item a {
+    font-size: 1.6rem;
+    color: white;
+    text-decoration: none;
+}
+
+.item a.active {
+    color: hsl(90, 79%, 60%);
+}
