@@ -121,6 +121,7 @@
     max-width: 45px;
     min-width: 45px;
 }
+
 .companion__icon {
     width: 100%;
     border-radius: 50%;
@@ -135,10 +136,90 @@
     font-weight: 700;
     color: #545454;
 }
+
 .companion__status {
     font-size: 1.2rem;
     font-style: italic;
     color: #838383;
+    text-transform: capitalize;
+}
+
+.correspondence__messages {
+}
+
+.messages__message {
+    display: flex;
+    margin: 10px 0;
+    align-items: flex-start;
+}
+
+.messages__message_me {
+    flex-direction: row-reverse;
+}
+
+.messages__message_you {
+    flex-direction: row;
+}
+
+.message__avatar {
+    max-width: 30px;
+    min-width: 30px;
+    height: 100%;
+    position: relative;
+}
+
+.message__icon {
+    width: 100%;
+    border-radius: 50%;
+}
+
+.message__status {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    padding: 2px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #bebebe none repeat scroll 0 0;
+}
+
+.message__status_online {
+    background-color: hsl(90, 79%, 60%);
+}
+
+.message__status_away {
+    background-color: #ffd300;
+}
+
+.message__status::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 6px;
+    width: 6px;
+    border-radius: 50%;
+    background: white none repeat scroll 0 0;
+}
+
+.message__text {
+    position: relative;
+    margin: 0 10px;
+    padding: 5px 8px;
+    width: 75%;
+    border-radius: 10px;
+    font-size: 1.3rem;
+    vertical-align: top;
+    color: #434343;
+}
+
+.message__text_me {
+    background-color: rgba(202, 239, 142, 0.65);
+}
+.message__text_you {
+    background-color: rgba(24, 174, 239, 0.2);;
 }
 
 /*.companions__title {*/
