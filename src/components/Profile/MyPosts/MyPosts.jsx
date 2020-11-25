@@ -1,10 +1,12 @@
-import React from "react";
-import s from "./MyPosts.module.css";
-import Post from "./Post/Post";
+import React from 'react';
+import s from './MyPosts.module.css';
+import Post from './Post/Post';
 
-const MyPosts = () => {
+const MyPosts = (props) => {
+  const { posts } = props;
+
   return (
-    <div>
+    <div className={s.myPosts}>
       My posts
       <div>
         New post
@@ -12,8 +14,9 @@ const MyPosts = () => {
         <button>Add Post</button>
       </div>
       <div className={s.posts}>
-        <Post message="hi" likeCount="1" />
-        <Post message="Hello" likeCount="3" />
+        {posts.map((post) => (
+          <Post {...post} key={post.id} />
+        ))}
       </div>
     </div>
   );

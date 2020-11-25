@@ -1,0 +1,25 @@
+.title {
+    font-size: 2rem;
+    text-transform: capitalize;
+    color: #424242;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.title::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 8px;
+    width: 50px;
+    height: 2px;
+    background-color: hsl(199, 96%, 80%);
+}
+
+.title__icon:before {
+    content: '\e6b8';
+}
+

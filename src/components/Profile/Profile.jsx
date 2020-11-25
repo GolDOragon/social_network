@@ -1,15 +1,31 @@
-import React from "react";
-import MyPosts from "./MyPosts/MyPosts";
-import s from "./Profile.module.css";
+import React from 'react';
+import MyPosts from './MyPosts/MyPosts';
+import s from './Profile.module.css';
+import ProfileInfo from './ProfileInfo/ProfileInfo';
 
 const Profile = () => {
+  const posts = [
+    {
+      id: 1,
+      message: 'Hi',
+      likeCount: 22,
+    },
+    {
+      id: 2,
+      message: 'How are you?',
+      likeCount: 10,
+    },
+    {
+      id: 3,
+      message: "I'm fine, thanks",
+      likeCount: 13,
+    },
+  ];
+
   return (
     <div className={s.content}>
-      <div>
-        <img src="https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&h=350" />
-      </div>
-      <div>ava + description</div>
-      <MyPosts />
+      <ProfileInfo />
+      <MyPosts posts={posts} />
     </div>
   );
 };

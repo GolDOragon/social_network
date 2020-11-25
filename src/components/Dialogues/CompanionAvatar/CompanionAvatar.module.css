@@ -1,0 +1,32 @@
+.companion {
+    display: flex;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #e1e8ed;
+}
+
+.companion__avatar {
+    max-width: 45px;
+    min-width: 45px;
+}
+
+.companion__icon {
+    width: 100%;
+    border-radius: 50%;
+}
+
+.companion__info {
+    margin-left: 10px;
+}
+
+.companion__name {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #545454;
+}
+
+.companion__status {
+    font-size: 1.2rem;
+    font-style: italic;
+    color: #838383;
+    text-transform: capitalize;
+}

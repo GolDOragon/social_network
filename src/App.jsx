@@ -1,11 +1,11 @@
 import React from 'react';
+import { Route } from 'react-router-dom';
 import './App.css';
+import Dialogues from './components/Dialogues/Dialogues';
 import Header from './components/Header/Header';
 import Navbar from './components/Navbar/Navbar';
-import Dialogs from './components/Dialogs/Dialogs';
-import Profile from './components/Profile/Profile';
-import { BrowserRouter, Route } from 'react-router-dom';
 import News from './components/News/News';
+import Profile from './components/Profile/Profile';
 import Settings from './components/Settings/Settings';
 
 const App = () => {
@@ -15,7 +15,7 @@ const App = () => {
       <Navbar />
       <div className="app-wrapper-content">
         <Route exat path="/profile" component={Profile} />
-        <Route path="/messages" component={Dialogs} />
+        <Route path="/dialogues" component={Dialogues} />
         <Route path="/news" component={News} />
         <Route path="/settings" component={Settings} />
       </div>

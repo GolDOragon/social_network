@@ -1,0 +1,71 @@
+.companion {
+    display: flex;
+    position: relative;
+    padding: 10px 0;
+    width: 100%;
+    border-bottom: 1px solid #e1e8ed;
+    align-content: center;
+    white-space: nowrap;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s linear 0s;
+}
+
+.companion_active {
+    background-color: #6490b1;
+}
+
+.companion__avatar {
+    max-width: 35px;
+    min-width: 35px;
+    /*width: 35px;*/
+    height: 35px;
+    position: relative;
+    margin: 0 10px;
+}
+
+.companion__icon {
+    width: 100%;
+    border-radius: 50%;
+}
+
+.companion__status {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    padding: 2px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #bebebe none repeat scroll 0 0;
+}
+
+.companion__status_online {
+    background-color: hsl(90, 79%, 60%);
+}
+
+.companion__status_away {
+    background-color: #ffd300;
+}
+
+.companion__status::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 6px;
+    width: 6px;
+    border-radius: 50%;
+    background: white none repeat scroll 0 0;
+}
+
+.companion__name {
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: black;
+    align-self: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
