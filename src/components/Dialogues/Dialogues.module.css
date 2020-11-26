@@ -1,14 +1,18 @@
-.dialogs {
+.dialogues {
     display: grid;
-    grid-template: auto 1fr / 1fr;
+    grid-template: 60px 1fr / 1fr;
     padding: 1rem;
 }
 
-.dialogs__container {
+/* .dialogues__titleContainer {
+    margin-bottom: 20px;
+} */
+
+.dialogues__container {
     display: grid;
     grid-template: auto / 200px 1fr;
     grid-column-gap: 15px;
 }
 
-.dialogs__correspondence {
+.dialogues__correspondence {
 }

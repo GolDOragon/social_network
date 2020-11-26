@@ -8,17 +8,22 @@ import News from './components/News/News';
 import Profile from './components/Profile/Profile';
 import Settings from './components/Settings/Settings';
 
-const App = () => {
+const App = (props) => {
+  const { dialoguesPage, profilePage, sidebar } = props.state;
+
   return (
     <div className="app-wrapper">
       <Header />
-      <Navbar />
-      <div className="app-wrapper-content">
-        <Route exat path="/profile" component={Profile} />
-        <Route path="/dialogues" component={Dialogues} />
+      <Navbar {...sidebar} />
+      <main className="app-wrapper-content">
+        <Route path="/profile" render={() => <Profile {...profilePage} />} />
+        <Route
+          path="/dialogues"
+          render={() => <Dialogues {...dialoguesPage} />}
+        />
         <Route path="/news" component={News} />
         <Route path="/settings" component={Settings} />
-      </div>
+      </main>
     </div>
   );
 };
