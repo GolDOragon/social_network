@@ -1,0 +1,18 @@
+.friendSearch {
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 50px 20px 1fr;
+  row-gap: 10px;
+}
+
+.friendSearch_search {
+  font-size: 1.6rem;
+  font-family: inherit;
+  outline: none;
+  color: #797979;
+}
+
+.friendSearch__list {
+  border-top: 1px solid hsl(205, 25%, 91%);
+  border-left: 1px solid hsl(205, 25%, 91%);
+}

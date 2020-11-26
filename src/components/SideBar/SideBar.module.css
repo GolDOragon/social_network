@@ -1,0 +1,10 @@
+.sidebar {
+  grid-area: n;
+  padding: 10px;
+  background-color: white;
+
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 50px 150px 1fr;
+  row-gap: 10px;
+}

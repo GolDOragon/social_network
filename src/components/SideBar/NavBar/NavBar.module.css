@@ -1,0 +1,20 @@
+.navbar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0 5px;
+}
+
+.navbar__link {
+  padding: 3px 0;
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: #797979;
+  text-transform: capitalize;
+  text-decoration: none;
+}
+
+.navbar__link_active {
+  text-decoration: underline;
+  /* background-color: hsla(206, 33%, 54%, 0.1); */
+}

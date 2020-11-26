@@ -3,10 +3,10 @@ import { Route } from 'react-router-dom';
 import './App.css';
 import Dialogues from './components/Dialogues/Dialogues';
 import Header from './components/Header/Header';
-import Navbar from './components/Navbar/Navbar';
 import News from './components/News/News';
 import Profile from './components/Profile/Profile';
 import Settings from './components/Settings/Settings';
+import SideBar from './components/SideBar/SideBar';
 
 const App = (props) => {
   const { dialoguesPage, profilePage, sidebar } = props.state;
@@ -14,7 +14,7 @@ const App = (props) => {
   return (
     <div className="app-wrapper">
       <Header />
-      <Navbar {...sidebar} />
+      <SideBar {...sidebar} />
       <main className="app-wrapper-content">
         <Route path="/profile" render={() => <Profile {...profilePage} />} />
         <Route
