@@ -1,4 +1,5 @@
 .dialoguesList {
+  border: 1px solid #e1e8ed;
   list-style: outside none none;
   overflow: auto;
 }

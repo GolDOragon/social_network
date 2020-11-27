@@ -15,7 +15,7 @@
 }
 .dialogues__aside {
   grid-area: aside;
-  border-right: 1px solid #e1e8ed;
+  overflow: auto;
 }
 .dialogues__avatar {
   grid-area: avatar;
