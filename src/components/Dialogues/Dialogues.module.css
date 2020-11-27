@@ -1,18 +1,29 @@
 .dialogues {
-    display: grid;
-    grid-template: 60px 1fr / 1fr;
-    padding: 1rem;
+  display: grid;
+  height: 100%;
+
+  column-gap: 10px;
+  grid-template: 60px calc(100% - 60px - 100px - 20px - 10px) 100px/ 200px 1fr;
+  grid-template-areas:
+    'title avatar'
+    'aside messages'
+    'aside input';
 }
 
-/* .dialogues__titleContainer {
-    margin-bottom: 20px;
-} */
-
-.dialogues__container {
-    display: grid;
-    grid-template: auto / 200px 1fr;
-    grid-column-gap: 15px;
+.dialogues__title {
+  grid-area: title;
 }
-
-.dialogues__correspondence {
+.dialogues__aside {
+  grid-area: aside;
+  border-right: 1px solid #e1e8ed;
+}
+.dialogues__avatar {
+  grid-area: avatar;
+}
+.dialogues__messages {
+  grid-area: messages;
+  overflow: auto;
+}
+.dialogues__input {
+  grid-area: input;
 }

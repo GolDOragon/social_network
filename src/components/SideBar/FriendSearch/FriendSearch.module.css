@@ -13,6 +13,5 @@
 }
 
 .friendSearch__list {
-  border-top: 1px solid hsl(205, 25%, 91%);
-  border-left: 1px solid hsl(205, 25%, 91%);
+  border: 1px solid hsl(205, 25%, 91%);
 }

@@ -1,6 +1,4 @@
 .dialoguesList {
-    border-right: 1px solid #e1e8ed;
-    list-style: outside none none;
-    max-height: 500px;
-    overflow: auto;
+  list-style: outside none none;
+  overflow: auto;
 }

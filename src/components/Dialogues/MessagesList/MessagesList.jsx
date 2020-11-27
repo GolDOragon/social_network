@@ -1,6 +1,6 @@
 import React from 'react';
-import s from './MessagesList.module.css';
 import Message from './Message/Message';
+import s from './MessagesList.module.css';
 
 const MessagesList = (props) => {
   return (
