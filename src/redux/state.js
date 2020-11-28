@@ -1,4 +1,4 @@
-import { rerenderEntireTree } from '../render';
+// let rerenderEntireTree = () => console.log('state is updated');
 
 let state = {
   dialoguesPage: {
@@ -88,6 +88,15 @@ let state = {
     ],
     messages: [
       {
+        id: 0,
+        isMyMessage: true,
+        iconSrc:
+          'http://www.wpkixx.com/html/winku/images/resources/friend-avatar4.jpg',
+        iconAltName: 'Good Boy',
+        status: 'offline',
+        text: `He was asked whether he would agree to leave the White House if he lost the electoral college vote. "Certainly I will, certainly I will and you know that," he said. However, the president went on to say that "if they do [elect Joe Biden], they made a mistake", and suggested he may never accept defeat. "It's going to be a very hard thing to concede because we know there was massive fraud," he said, an allegation he has stood by without offering proof. It is not a requirement for Mr Trump to concede in order for Mr Biden to be sworn in as the 46th US president. `,
+      },
+      {
         id: 1,
         isMyMessage: false,
         iconSrc:
@@ -143,15 +152,6 @@ let state = {
         iconAltName: 'Good Boy',
         status: 'offline',
         text: `The president and his supporters have lodged a number of legal challenges over the election, but most have been dismissed. Earlier this week, Mr Trump finally agreed to allow the formal transition to President-elect Biden's team to begin, following several weeks of uncertainty. The decision means Mr Biden is able to receive top security briefings and access key government officials and millions of dollars in funds as he prepares to take over.`,
-      },
-      {
-        id: 7,
-        isMyMessage: true,
-        iconSrc:
-          'http://www.wpkixx.com/html/winku/images/resources/friend-avatar4.jpg',
-        iconAltName: 'Good Boy',
-        status: 'offline',
-        text: `He was asked whether he would agree to leave the White House if he lost the electoral college vote. "Certainly I will, certainly I will and you know that," he said. However, the president went on to say that "if they do [elect Joe Biden], they made a mistake", and suggested he may never accept defeat. "It's going to be a very hard thing to concede because we know there was massive fraud," he said, an allegation he has stood by without offering proof. It is not a requirement for Mr Trump to concede in order for Mr Biden to be sworn in as the 46th US president. `,
       },
     ],
   },
@@ -227,9 +227,17 @@ let state = {
   },
 };
 
+const observers = [];
+export const subscribe = (observer) => {
+  observers.push(observer);
+};
+const rerenderEntireTree = () => {
+  observers.forEach((cb) => cb(state));
+};
+
 export const updatePostText = (text) => {
   state.profilePage.textareaValue = text;
-  rerenderEntireTree(state);
+  rerenderEntireTree();
 };
 
 export const addPost = () => {
@@ -241,12 +249,12 @@ export const addPost = () => {
 
   state.profilePage.posts.push(post);
   updatePostText('');
-  rerenderEntireTree(state);
+  rerenderEntireTree();
 };
 
 export const updateMessage = (text) => {
   state.dialoguesPage.currentMessage = text;
-  rerenderEntireTree(state);
+  rerenderEntireTree();
 };
 
 export const sendMessage = () => {
@@ -261,7 +269,7 @@ export const sendMessage = () => {
   };
   state.dialoguesPage.messages.push(newMessage);
   updateMessage('');
-  rerenderEntireTree(state);
+  rerenderEntireTree();
 };
 
 export default state;

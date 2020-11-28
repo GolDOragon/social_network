@@ -8,13 +8,11 @@ const MyPosts = (props) => {
   const textarea = React.createRef();
 
   const handleAddPost = () => {
-    // let text = textarea.current.value;
-    props.addPost(/* text */);
+    props.addPost();
   };
 
   const handleChangeText = () => {
     let text = textarea.current.value;
-    console.log(text);
     props.updatePostText(text);
   };
 
@@ -33,8 +31,8 @@ const MyPosts = (props) => {
         <button onClick={handleAddPost}>Add Post</button>
       </div>
       <div className={s.posts}>
-        {posts.map((post) => (
-          <Post {...post} key={post.id} />
+        {posts.map((post, idx) => (
+          <Post {...post} key={`${post.id}${idx}`} />
         ))}
       </div>
     </div>
