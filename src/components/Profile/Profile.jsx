@@ -4,12 +4,17 @@ import s from './Profile.module.css';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 
 const Profile = (props) => {
-  const {posts} = props;
+  const { posts } = props;
 
   return (
     <div className={s.content}>
       <ProfileInfo />
-      <MyPosts posts={posts} />
+      <MyPosts
+        posts={posts}
+        addPost={props.addPost}
+        updatePostText={props.updatePostText}
+        textareaValue={props.textareaValue}
+      />
     </div>
   );
 };

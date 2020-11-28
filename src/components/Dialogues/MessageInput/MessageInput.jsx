@@ -2,16 +2,32 @@ import React from 'react';
 import s from './MessageInput.module.css';
 
 const MessageInput = (props) => {
+  const { currentMessage } = props;
+
+  const handleChange = (e) => {
+    const text = e.target.value;
+    props.updateMessage(text);
+  };
+  const handleClick = () => {
+    props.sendMessage();
+  };
+
   return (
     <div className={s.messageInput}>
       <div className={s.messageInput__inputContainer}>
-        <textarea className={s.messageInput__input} rows={5}></textarea>
+        <textarea
+          className={s.messageInput__input}
+          rows={5}
+          value={currentMessage}
+          onChange={handleChange}
+        ></textarea>
       </div>
       <div className={s.messageInput__sendContainer}>
-        <button className={s.messageInput__send}>Send</button>
+        <button className={s.messageInput__send} onClick={handleClick}>
+          Send
+        </button>
       </div>
     </div>
-
   );
 };
 

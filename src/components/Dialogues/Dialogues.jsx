@@ -7,7 +7,7 @@ import MessageInput from './MessageInput/MessageInput';
 import MessagesList from './MessagesList/MessagesList';
 
 const Dialogues = (props) => {
-  const { messages, companions } = props;
+  const { messages, companions, currentMessage } = props;
   return (
     <div className={s.dialogues}>
       <div className={s.dialogues__title}>
@@ -28,7 +28,11 @@ const Dialogues = (props) => {
         <MessagesList messages={messages} />
       </div>
       <div className={s.dialogues__input}>
-        <MessageInput />
+        <MessageInput
+          currentMessage={currentMessage}
+          updateMessage={props.updateMessage}
+          sendMessage={props.sendMessage}
+        />
       </div>
     </div>
   );
