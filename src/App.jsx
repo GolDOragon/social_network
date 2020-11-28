@@ -18,22 +18,12 @@ const App = (props) => {
       <main className="app-wrapper-content">
         <Route
           path="/profile"
-          render={() => (
-            <Profile
-              {...profilePage}
-              addPost={props.addPost}
-              updatePostText={props.updatePostText}
-            />
-          )}
+          render={() => <Profile {...profilePage} dispatch={props.dispatch} />}
         />
         <Route
           path="/dialogues"
           render={() => (
-            <Dialogues
-              {...dialoguesPage}
-              updateMessage={props.updateMessage}
-              sendMessage={props.sendMessage}
-            />
+            <Dialogues {...dialoguesPage} dispatch={props.dispatch} />
           )}
         />
         <Route path="/news" component={News} />

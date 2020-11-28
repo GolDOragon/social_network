@@ -1,4 +1,5 @@
 import React from 'react';
+import { addPostAction, updatePostTextAction } from '../../../redux/store';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
 
@@ -8,12 +9,13 @@ const MyPosts = (props) => {
   const textarea = React.createRef();
 
   const handleAddPost = () => {
-    props.addPost();
+    props.dispatch(addPostAction());
   };
 
   const handleChangeText = () => {
     let text = textarea.current.value;
-    props.updatePostText(text);
+
+    props.dispatch(updatePostTextAction(text));
   };
 
   return (

@@ -30,8 +30,7 @@ const Dialogues = (props) => {
       <div className={s.dialogues__input}>
         <MessageInput
           currentMessage={currentMessage}
-          updateMessage={props.updateMessage}
-          sendMessage={props.sendMessage}
+          dispatch={props.dispatch}
         />
       </div>
     </div>

@@ -1,3 +1,19 @@
+export const ADD_POST = 'ADD_POST';
+export const UPDATE_POST_TEXT = 'UPDATE_POST_TEXT';
+export const SEND_MESSAGE = 'SEND_MESSAGE';
+export const UPDATE_MESSAGE = 'UPDATE_MESSAGE';
+
+export const addPostAction = () => ({ type: ADD_POST });
+export const updatePostTextAction = (text) => ({
+  type: UPDATE_POST_TEXT,
+  payload: text,
+});
+export const sendMessageAction = () => ({ type: SEND_MESSAGE });
+export const updateMessageAction = (text) => ({
+  type: UPDATE_MESSAGE,
+  payload: text,
+});
+
 const store = {
   _state: {
     dialoguesPage: {
@@ -226,6 +242,10 @@ const store = {
     },
   },
   _subscribers: [],
+  _callSubscribers() {
+    this._subscribers.forEach((cb) => cb(this.getState()));
+  },
+
   getState() {
     return this._state;
   },
@@ -235,16 +255,66 @@ const store = {
   unsubscribe(observer) {
     this._subscribers = this._subscribers.filter((item) => item !== observer);
   },
-  _callSubscribers() {
-    this._subscribers.forEach((cb) => cb(this.getState()));
+  dispatch(action) {
+    switch (action.type) {
+      case ADD_POST:
+        const id = this.getState().profilePage.posts.length;
+        const message = this.getState().profilePage.textareaValue;
+        let post = {
+          id,
+          message,
+          likeCount: 0,
+        };
+
+        this._state.profilePage.posts.push(post);
+        this.dispatch(updatePostTextAction(''));
+        // this._updatePostText('');
+        this._callSubscribers();
+        break;
+
+      case UPDATE_POST_TEXT:
+        this._state.profilePage.textareaValue = action.payload;
+        this._callSubscribers();
+        break;
+
+      case SEND_MESSAGE:
+        const calcMessage = (state) => {
+          const id = state.dialoguesPage.messages.length;
+          const text = state.dialoguesPage.currentMessage;
+          return {
+            id,
+            isMyMessage: true,
+            iconSrc:
+              'http://www.wpkixx.com/html/winku/images/resources/friend-avatar4.jpg',
+            iconAltName: 'Good Boy',
+            status: 'offline',
+            text,
+          };
+        };
+
+        const newMessage = calcMessage(this.getState());
+        this._state.dialoguesPage.messages.push(newMessage);
+
+        this.dispatch(updateMessageAction(''));
+        // this._updateMessage('');
+        this._callSubscribers();
+        break;
+
+      case UPDATE_MESSAGE:
+        this._state.dialoguesPage.currentMessage = action.payload;
+        this._callSubscribers();
+        break;
+
+      default:
+    }
   },
 
-  updateMessage(text) {
+  _updateMessage(text) {
     this._state.dialoguesPage.currentMessage = text;
     this._callSubscribers();
   },
 
-  sendMessage() {
+  _sendMessage() {
     const calcMessage = (state) => {
       const id = state.dialoguesPage.messages.length;
       const text = state.dialoguesPage.currentMessage;
@@ -262,15 +332,15 @@ const store = {
     const newMessage = calcMessage(this.getState());
     this._state.dialoguesPage.messages.push(newMessage);
 
-    this.updateMessage('');
+    this._updateMessage('');
     this._callSubscribers();
   },
-  updatePostText(text) {
+  _updatePostText(text) {
     this._state.profilePage.textareaValue = text;
     this._callSubscribers();
   },
 
-  addPost() {
+  _addPost() {
     const id = this.getState().profilePage.posts.length;
     const message = this.getState().profilePage.textareaValue;
     let post = {
@@ -280,7 +350,7 @@ const store = {
     };
 
     this._state.profilePage.posts.push(post);
-    this.updatePostText('');
+    this._updatePostText('');
     this._callSubscribers();
   },
 };

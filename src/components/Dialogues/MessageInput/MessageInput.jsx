@@ -1,4 +1,5 @@
 import React from 'react';
+import { sendMessageAction, updateMessageAction } from '../../../redux/store';
 import s from './MessageInput.module.css';
 
 const MessageInput = (props) => {
@@ -6,10 +7,10 @@ const MessageInput = (props) => {
 
   const handleChange = (e) => {
     const text = e.target.value;
-    props.updateMessage(text);
+    props.dispatch(updateMessageAction(text));
   };
   const handleClick = () => {
-    props.sendMessage();
+    props.dispatch(sendMessageAction());
   };
 
   return (

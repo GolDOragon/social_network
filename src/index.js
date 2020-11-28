@@ -11,10 +11,7 @@ let renderDOM = (state) => {
     <BrowserRouter>
       <App
         state={state}
-        addPost={store.addPost.bind(store)}
-        updatePostText={store.updatePostText.bind(store)}
-        sendMessage={store.sendMessage.bind(store)}
-        updateMessage={store.updateMessage.bind(store)}
+        dispatch={store.dispatch.bind(store)}
       />
     </BrowserRouter>,
     document.getElementById('root'),
