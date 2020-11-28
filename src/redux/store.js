@@ -235,13 +235,13 @@ const store = {
   unsubscribe(observer) {
     this._subscribers = this._subscribers.filter((item) => item !== observer);
   },
-  render() {
+  _callSubscribers() {
     this._subscribers.forEach((cb) => cb(this.getState()));
   },
 
   updateMessage(text) {
-    store._state.dialoguesPage.currentMessage = text;
-    store.render();
+    this._state.dialoguesPage.currentMessage = text;
+    this._callSubscribers();
   },
 
   sendMessage() {
@@ -259,29 +259,29 @@ const store = {
       };
     };
 
-    const newMessage = calcMessage(store.getState());
-    store._state.dialoguesPage.messages.push(newMessage);
+    const newMessage = calcMessage(this.getState());
+    this._state.dialoguesPage.messages.push(newMessage);
 
-    store.updateMessage('');
-    store.render();
+    this.updateMessage('');
+    this._callSubscribers();
   },
   updatePostText(text) {
-    store._state.profilePage.textareaValue = text;
-    store.render();
+    this._state.profilePage.textareaValue = text;
+    this._callSubscribers();
   },
 
   addPost() {
-    const id = store.getState().profilePage.posts.length;
-    const message = store.getState().profilePage.textareaValue;
+    const id = this.getState().profilePage.posts.length;
+    const message = this.getState().profilePage.textareaValue;
     let post = {
       id,
       message,
       likeCount: 0,
     };
 
-    store._state.profilePage.posts.push(post);
-    store.updatePostText('');
-    store.render();
+    this._state.profilePage.posts.push(post);
+    this.updatePostText('');
+    this._callSubscribers();
   },
 };
 
