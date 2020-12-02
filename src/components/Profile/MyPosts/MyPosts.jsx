@@ -1,5 +1,5 @@
 import React from 'react';
-import { addPostAction, updatePostTextAction } from '../../../redux/store';
+import { addPostAction, updatePostTextAction } from '../../../redux/profileReducer';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
 

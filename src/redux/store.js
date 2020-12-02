@@ -1,23 +1,11 @@
-export const ADD_POST = 'ADD_POST';
-export const UPDATE_POST_TEXT = 'UPDATE_POST_TEXT';
-export const SEND_MESSAGE = 'SEND_MESSAGE';
-export const UPDATE_MESSAGE = 'UPDATE_MESSAGE';
-
-export const addPostAction = () => ({ type: ADD_POST });
-export const updatePostTextAction = (text) => ({
-  type: UPDATE_POST_TEXT,
-  payload: text,
-});
-export const sendMessageAction = () => ({ type: SEND_MESSAGE });
-export const updateMessageAction = (text) => ({
-  type: UPDATE_MESSAGE,
-  payload: text,
-});
+import dialoguesReducer from './dialoguesReducer';
+import profileReducer from './profileReducer';
+import sidebarReducer from './sidebarReducer';
 
 const store = {
   _state: {
     dialoguesPage: {
-      currentMessage: '',
+      newMessageText: '',
       companions: [
         {
           id: 1,
@@ -256,102 +244,14 @@ const store = {
     this._subscribers = this._subscribers.filter((item) => item !== observer);
   },
   dispatch(action) {
-    switch (action.type) {
-      case ADD_POST:
-        const id = this.getState().profilePage.posts.length;
-        const message = this.getState().profilePage.textareaValue;
-        let post = {
-          id,
-          message,
-          likeCount: 0,
-        };
+    this._state.profilePage = profileReducer(this._state.profilePage, action);
+    this._state.dialoguesPage = dialoguesReducer(
+      this._state.dialoguesPage,
+      action,
+    );
+    this._state.sidebar = sidebarReducer(this._state.sidebar, action);
 
-        this._state.profilePage.posts.push(post);
-        this.dispatch(updatePostTextAction(''));
-        // this._updatePostText('');
-        this._callSubscribers();
-        break;
-
-      case UPDATE_POST_TEXT:
-        this._state.profilePage.textareaValue = action.payload;
-        this._callSubscribers();
-        break;
-
-      case SEND_MESSAGE:
-        const calcMessage = (state) => {
-          const id = state.dialoguesPage.messages.length;
-          const text = state.dialoguesPage.currentMessage;
-          return {
-            id,
-            isMyMessage: true,
-            iconSrc:
-              'http://www.wpkixx.com/html/winku/images/resources/friend-avatar4.jpg',
-            iconAltName: 'Good Boy',
-            status: 'offline',
-            text,
-          };
-        };
-
-        const newMessage = calcMessage(this.getState());
-        this._state.dialoguesPage.messages.push(newMessage);
-
-        this.dispatch(updateMessageAction(''));
-        // this._updateMessage('');
-        this._callSubscribers();
-        break;
-
-      case UPDATE_MESSAGE:
-        this._state.dialoguesPage.currentMessage = action.payload;
-        this._callSubscribers();
-        break;
-
-      default:
-    }
-  },
-
-  _updateMessage(text) {
-    this._state.dialoguesPage.currentMessage = text;
-    this._callSubscribers();
-  },
-
-  _sendMessage() {
-    const calcMessage = (state) => {
-      const id = state.dialoguesPage.messages.length;
-      const text = state.dialoguesPage.currentMessage;
-      return {
-        id,
-        isMyMessage: true,
-        iconSrc:
-          'http://www.wpkixx.com/html/winku/images/resources/friend-avatar4.jpg',
-        iconAltName: 'Good Boy',
-        status: 'offline',
-        text,
-      };
-    };
-
-    const newMessage = calcMessage(this.getState());
-    this._state.dialoguesPage.messages.push(newMessage);
-
-    this._updateMessage('');
-    this._callSubscribers();
-  },
-  _updatePostText(text) {
-    this._state.profilePage.textareaValue = text;
-    this._callSubscribers();
-  },
-
-  _addPost() {
-    const id = this.getState().profilePage.posts.length;
-    const message = this.getState().profilePage.textareaValue;
-    let post = {
-      id,
-      message,
-      likeCount: 0,
-    };
-
-    this._state.profilePage.posts.push(post);
-    this._updatePostText('');
-    this._callSubscribers();
+    this._callSubscribers(this._state);
   },
 };
 

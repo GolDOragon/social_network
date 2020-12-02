@@ -1,9 +1,12 @@
 import React from 'react';
-import { sendMessageAction, updateMessageAction } from '../../../redux/store';
+import {
+  sendMessageAction,
+  updateMessageAction
+} from '../../../redux/dialoguesReducer';
 import s from './MessageInput.module.css';
 
 const MessageInput = (props) => {
-  const { currentMessage } = props;
+  const { newMessageText } = props;
 
   const handleChange = (e) => {
     const text = e.target.value;
@@ -19,7 +22,7 @@ const MessageInput = (props) => {
         <textarea
           className={s.messageInput__input}
           rows={5}
-          value={currentMessage}
+          value={newMessageText}
           onChange={handleChange}
         ></textarea>
       </div>
