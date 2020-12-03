@@ -1,24 +1,27 @@
-import React from 'react';
+import { connect } from 'react-redux';
 import { updateSearchTextAction } from '../../redux/sidebarReducer';
 import SideBar from './SideBar';
 
-const SideBarContainer = (props) => {
-  const { pageList, companions, searchText } = props.store.getState().sidebar;
+const mapStateToProps = (state) => {
+  const { pageList, companions, searchText } = state.sidebar;
 
-  const handleUpdateSearchText = (text) => {
-    props.store.dispatch(updateSearchTextAction(text));
+  return {
+    navbarTitle: 'Shortcuts',
+    friendSearchTitle: 'Friends',
+    pageList: pageList,
+    foundFriends: companions,
+    searchText: searchText,
   };
-
-  return (
-    <SideBar
-      navbarTitle="Shortcuts"
-      friendSearchTitle="Friends"
-      pageList={pageList}
-      foundFriends={companions}
-      searchText={searchText}
-      updateSearchText={handleUpdateSearchText}
-    />
-  );
 };
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateSearchText: (text) => {
+      dispatch(updateSearchTextAction(text));
+    },
+  };
+};
+
+const SideBarContainer = connect(mapStateToProps, mapDispatchToProps)(SideBar);
 
 export default SideBarContainer;

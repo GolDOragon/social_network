@@ -1,43 +1,42 @@
-import React from 'react';
+import { connect } from 'react-redux';
 import {
   sendMessageAction,
   updateMessageAction
 } from '../../redux/dialoguesReducer';
 import Dialogues from './Dialogues';
 
-const DialoguesContainer = (props) => {
+const mapStateToProps = (state) => {
   const {
+    title,
+    companionAvatar,
     messages,
     companions,
     newMessageText,
-  } = props.store.getState().dialoguesPage;
+  } = state.dialoguesPage;
 
-  const avatar = {
-    iconAltName: 'avatar',
-    iconSrc:
-      'http://www.wpkixx.com/html/winku/images/resources/friend-avatar8.jpg',
-    name: 'Jason Bourne',
-    status: 'online',
+  return {
+    title,
+    companions,
+    companionAvatar,
+    messages,
+    newMessageText,
   };
-
-  const handleSendMessage = () => {
-    props.store.dispatch(sendMessageAction());
-  };
-  const handleUpdateMessageText = (newText) => {
-    props.store.dispatch(updateMessageAction(newText));
-  };
-
-  return (
-    <Dialogues
-      title="All messages"
-      companions={companions}
-      companionAvatar={avatar}
-      messages={messages}
-      newMessageText={newMessageText}
-      sendMessage={handleSendMessage}
-      updateMessageText={handleUpdateMessageText}
-    />
-  );
 };
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    sendMessage: () => {
+      dispatch(sendMessageAction());
+    },
+    updateMessageText: (text) => {
+      dispatch(updateMessageAction(text));
+    },
+  };
+};
+
+const DialoguesContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Dialogues);
 
 export default DialoguesContainer;

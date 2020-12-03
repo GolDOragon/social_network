@@ -2,6 +2,14 @@ export const SEND_MESSAGE = 'SEND_MESSAGE';
 export const UPDATE_MESSAGE = 'UPDATE_MESSAGE';
 
 const initialState = {
+  title: 'All messages',
+  companionAvatar: {
+    iconAltName: 'avatar',
+    iconSrc:
+      'http://www.wpkixx.com/html/winku/images/resources/friend-avatar8.jpg',
+    name: 'Jason Bourne',
+    status: 'online',
+  },
   newMessageText: '',
   companions: [
     {

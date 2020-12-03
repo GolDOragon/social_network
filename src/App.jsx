@@ -9,17 +9,13 @@ import Settings from './components/Settings/Settings';
 import SideBarContainer from './components/SideBar/SideBarContainer';
 
 const App = (props) => {
-
   return (
     <div className="app-wrapper">
       <Header />
-      <SideBarContainer store={props.store} />
+      <SideBarContainer />
       <main className="app-wrapper-content">
-        <Route path="/profile" render={() => <Profile store={props.store} />} />
-        <Route
-          path="/dialogues"
-          render={() => <DialoguesContainer store={props.store} />}
-        />
+        <Route path="/profile" render={() => <Profile />} />
+        <Route path="/dialogues" render={() => <DialoguesContainer />} />
         <Route path="/news" component={News} />
         <Route path="/settings" component={Settings} />
       </main>
