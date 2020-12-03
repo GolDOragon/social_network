@@ -7,22 +7,25 @@ import MessageInput from './MessageInput/MessageInput';
 import MessagesList from './MessagesList/MessagesList';
 
 const Dialogues = (props) => {
-  const { messages, companions, newMessageText } = props;
+  const {
+    title,
+    companions,
+    companionAvatar,
+    messages,
+    newMessageText,
+    sendMessage,
+    updateMessageText,
+  } = props;
   return (
     <div className={s.dialogues}>
       <div className={s.dialogues__title}>
-        <Title text="All messages" />
+        <Title text={title} />
       </div>
       <div className={s.dialogues__aside}>
         <DialoguesList companions={companions} />
       </div>
       <div className={s.dialogues__avatar}>
-        <CompanionAvatar
-          iconAltName="avatar"
-          iconSrc="http://www.wpkixx.com/html/winku/images/resources/friend-avatar8.jpg"
-          name="Jason Bourne"
-          status="online"
-        />
+        <CompanionAvatar {...companionAvatar} />
       </div>
       <div className={s.dialogues__messages}>
         <MessagesList messages={messages} />
@@ -30,7 +33,8 @@ const Dialogues = (props) => {
       <div className={s.dialogues__input}>
         <MessageInput
           newMessageText={newMessageText}
-          dispatch={props.dispatch}
+          sendMessage={sendMessage}
+          updateMessageText={updateMessageText}
         />
       </div>
     </div>

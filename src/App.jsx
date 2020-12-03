@@ -1,30 +1,24 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import './App.css';
-import Dialogues from './components/Dialogues/Dialogues';
+import DialoguesContainer from './components/Dialogues/DialoguesContainer';
 import Header from './components/Header/Header';
 import News from './components/News/News';
 import Profile from './components/Profile/Profile';
 import Settings from './components/Settings/Settings';
-import SideBar from './components/SideBar/SideBar';
+import SideBarContainer from './components/SideBar/SideBarContainer';
 
 const App = (props) => {
-  const { dialoguesPage, profilePage, sidebar } = props.state;
 
   return (
     <div className="app-wrapper">
       <Header />
-      <SideBar {...sidebar} />
+      <SideBarContainer store={props.store} />
       <main className="app-wrapper-content">
-        <Route
-          path="/profile"
-          render={() => <Profile {...profilePage} dispatch={props.dispatch} />}
-        />
+        <Route path="/profile" render={() => <Profile store={props.store} />} />
         <Route
           path="/dialogues"
-          render={() => (
-            <Dialogues {...dialoguesPage} dispatch={props.dispatch} />
-          )}
+          render={() => <DialoguesContainer store={props.store} />}
         />
         <Route path="/news" component={News} />
         <Route path="/settings" component={Settings} />

@@ -1,7 +1,28 @@
 export const ADD_POST = 'ADD_POST';
 export const UPDATE_POST_TEXT = 'UPDATE_POST_TEXT';
 
-const profileReducer = (state, action) => {
+const initialState = {
+  textareaValue: '',
+  posts: [
+    {
+      id: 0,
+      message: 'Hi',
+      likeCount: 22,
+    },
+    {
+      id: 0,
+      message: 'How are you?',
+      likeCount: 10,
+    },
+    {
+      id: 0,
+      message: "I'm fine, thanks",
+      likeCount: 13,
+    },
+  ],
+};
+
+const profileReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_POST:
       const id = state.posts.length;
@@ -33,4 +54,5 @@ export const updatePostTextAction = (text) => ({
   type: UPDATE_POST_TEXT,
   payload: text,
 });
+
 export default profileReducer;

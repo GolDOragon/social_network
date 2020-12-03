@@ -1,19 +1,15 @@
 import React from 'react';
-import {
-  sendMessageAction,
-  updateMessageAction
-} from '../../../redux/dialoguesReducer';
 import s from './MessageInput.module.css';
 
 const MessageInput = (props) => {
-  const { newMessageText } = props;
+  const { newMessageText, sendMessage, updateMessageText } = props;
 
   const handleChange = (e) => {
     const text = e.target.value;
-    props.dispatch(updateMessageAction(text));
+    updateMessageText(text);
   };
   const handleClick = () => {
-    props.dispatch(sendMessageAction());
+    sendMessage();
   };
 
   return (

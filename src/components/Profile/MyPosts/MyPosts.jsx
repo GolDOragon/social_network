@@ -1,21 +1,17 @@
 import React from 'react';
-import { addPostAction, updatePostTextAction } from '../../../redux/profileReducer';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
 
 const MyPosts = (props) => {
   const { posts, textareaValue } = props;
 
-  const textarea = React.createRef();
-
   const handleAddPost = () => {
-    props.dispatch(addPostAction());
+    props.addPost();
   };
 
-  const handleChangeText = () => {
-    let text = textarea.current.value;
-
-    props.dispatch(updatePostTextAction(text));
+  const handleChangeText = (e) => {
+    let text = e.target.value;
+    props.updatePostText(text);
   };
 
   return (
@@ -25,7 +21,6 @@ const MyPosts = (props) => {
         <div>
           <textarea
             style={{ backgroundColor: 'lightblue' }}
-            ref={textarea}
             value={textareaValue}
             onChange={handleChangeText}
           />

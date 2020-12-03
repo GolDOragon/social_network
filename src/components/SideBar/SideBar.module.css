@@ -5,6 +5,6 @@
 
   display: grid;
   grid-template-columns: 100%;
-  grid-template-rows: 50px 150px calc(100% - 50px - 150px - 20px);
+  grid-template-rows: 210px calc(100% - 200px - 20px);
   row-gap: 10px;
 }
