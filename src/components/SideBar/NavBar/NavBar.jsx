@@ -5,21 +5,27 @@ import s from './NavBar.module.css';
 
 const NavBar = (props) => {
   const { pageList, navbarTitle } = props;
+  const links = pageList.map((pageName) =>
+    pageName.split(' ').join('-').toLowerCase(),
+  );
 
   return (
     <div className={s.navbarContainer}>
       <Title text={navbarTitle} />
       <nav className={s.navbar}>
-        {pageList.map((page, idx) => (
-          <NavLink
-            to={`/${page}`}
-            className={s.navbar__link}
-            activeClassName={`${s.navbar__link} ${s.navbar__link_active}`}
-            key={page + idx}
-          >
-            {page}
-          </NavLink>
-        ))}
+        {pageList.map((page, idx) => {
+          const link = page.split(' ').join('-').toLowerCase();
+          return (
+            <NavLink
+              to={`/${link}`}
+              className={s.navbar__link}
+              activeClassName={`${s.navbar__link} ${s.navbar__link_active}`}
+              key={page + idx}
+            >
+              {page}
+            </NavLink>
+          );
+        })}
       </nav>
     </div>
   );

@@ -1,5 +1,6 @@
 import React from 'react';
 import DialoguesList from '../../atoms/DialoguesList/DialoguesList';
+import SearchInput from '../../atoms/SearchInput/SearchInput';
 import Title from '../../atoms/Title/Title';
 import s from './FriendSearch.module.css';
 
@@ -11,20 +12,19 @@ const FriendSearch = (props) => {
     updateSearchText,
   } = props;
 
-  const handleChangeText = (e) => {
-    const text = e.target.value;
+  const handleChangeText = (text) => {
     updateSearchText(text);
   };
 
   return (
     <div className={s.friendSearch}>
       <Title text={friendSearchTitle} />
-      <input
+      <SearchInput
         className={s.friendSearch_search}
-        type="text"
-        value={searchText}
         placeholder="Search Friend..."
-        onChange={handleChangeText}
+        text={searchText}
+        onChangeInput={handleChangeText}
+        showSearchButton={false}
       />
       <div className={s.friendSearch__list}>
         <DialoguesList companions={foundFriends} />

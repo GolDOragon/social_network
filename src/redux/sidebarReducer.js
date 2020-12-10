@@ -2,7 +2,7 @@ export const UPDATE_SEARCH_TEXT = 'UPDATE_SEARCH_TEXT';
 
 const initialState = {
   searchText: '',
-  pageList: ['profile', 'dialogues', 'news', 'music', 'settings'],
+  pageList: ['News', 'Profile', 'Dialogues', 'Music', 'Find Users', 'Settings'],
   companions: [
     {
       id: 1,

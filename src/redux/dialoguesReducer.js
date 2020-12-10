@@ -185,7 +185,8 @@ const dialoguesReducer = (state = initialState, action) => {
 
       return {
         ...state,
-        messages: state.messages.concat(newMessage),
+        // messages: state.messages.concat(newMessage),
+        messages: [...state.messages, newMessage],
         newMessageText: '',
       };
 

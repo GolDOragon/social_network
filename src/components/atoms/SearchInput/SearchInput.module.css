@@ -1,0 +1,18 @@
+.searchInput__input,
+.searchInput__searchBtn {
+  font-size: 1.6rem;
+  font-family: inherit;
+  outline: none;
+  color: #797979;
+  background-color: inherit;
+}
+
+.searchInput__searchBtn {
+  text-transform: capitalize;
+}
+
+.searchInput__searchBtn:hover {
+  color: #77b7e4;
+  font-weight: 600;
+  cursor: pointer;
+}

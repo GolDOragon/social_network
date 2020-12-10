@@ -1,7 +1,6 @@
 .navbarContainer {
   display: grid;
   grid-template-rows: 50px calc(100% - 50px - 10px);
-  row-gap: 10px;
 }
 
 .navbar {
