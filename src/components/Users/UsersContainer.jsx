@@ -27,8 +27,8 @@ const mapDispatchToProps = (dispatch) => ({
   unsubscribe: (userId) => {
     dispatch(unsubscribeFromUserAction(userId));
   },
-  getUsers: () => {
-    dispatch(setUsersAction());
+  setUsers: (userList) => {
+    dispatch(setUsersAction(userList));
   },
 });
 

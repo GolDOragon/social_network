@@ -1,0 +1,30 @@
+.user {
+  display: grid;
+  grid-template-columns: 100px calc(100% - 100px - 10px);
+  column-gap: 10px;
+  background-color: hsl(0, 5%, 85%);
+}
+
+.user__avatar {
+  display: grid;
+  row-gap: 10px;
+  max-width: 100px;
+  justify-self: center;
+  justify-items: center;
+  background-color: lightcoral;
+}
+.avatar__icon {
+  width: 60px;
+  height: 60px;
+}
+.avatar__subscribeBtn {
+
+}
+.user__info {
+    font-size: 1.6rem;
+    background-color: hsl(240, 57%, 67%);
+}
+.info__fullname {
+}
+.info__location {
+}

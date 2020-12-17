@@ -1,1 +1,7 @@
 .users {}
+
+.users__userList {
+    display: grid;
+    grid-template-rows: auto;
+    row-gap: 10px;
+}
