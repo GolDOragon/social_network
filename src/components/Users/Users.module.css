@@ -1,7 +1,14 @@
-.users {}
+.users {
+    display: grid;
+    row-gap: 20px;
+}
 
 .users__userList {
     display: grid;
     grid-template-rows: auto;
     row-gap: 10px;
+}
+
+.users__pagination {
+
 }

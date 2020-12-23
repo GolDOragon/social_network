@@ -1,6 +1,8 @@
 import { connect } from 'react-redux';
 import {
+  setCurrentPageAction,
   setUsersAction,
+  setUsersTotalCountAction,
   subscribeToUserAction,
   unsubscribeFromUserAction,
   updateSearchedUserAction
@@ -8,12 +10,14 @@ import {
 import Users from './Users';
 
 const mapStateToProps = (state) => {
-  const { pageTitle, searchedUser, userList } = state.usersPage;
-
+  const { usersPage } = state;
   return {
-    title: pageTitle,
-    searchedUser,
-    userList,
+    title: usersPage.pageTitle,
+    pageSize: usersPage.pageSize,
+    currentPage: usersPage.currentPage,
+    searchedUser: usersPage.searchedUser,
+    userList: usersPage.userList,
+    usersTotalCount: usersPage.usersTotalCount,
   };
 };
 
@@ -29,6 +33,12 @@ const mapDispatchToProps = (dispatch) => ({
   },
   setUsers: (userList) => {
     dispatch(setUsersAction(userList));
+  },
+  setUsersTotalCount: (count) => {
+    dispatch(setUsersTotalCountAction(count));
+  },
+  setCurrentPage: (pageNumber) => {
+    dispatch(setCurrentPageAction(pageNumber));
   },
 });
 

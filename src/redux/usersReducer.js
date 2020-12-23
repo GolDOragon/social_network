@@ -1,11 +1,16 @@
-export const UPDATE_SEARCHED_USER = 'UPDATE_SEARCHED_USER';
-export const SET_USERS = 'SET_USERS';
-export const SUBSCRIBE_TO_USER = 'SUBSCRIBE_TO_USER';
-export const UNSUBSCRIBE_FROM_USER = 'UNSUBSCRIBE_FROM_USER';
+const UPDATE_SEARCHED_USER = 'UPDATE_SEARCHED_USER';
+const SET_USERS = 'SET_USERS';
+const SET_USERS_TOTAL_COUNT = 'SET_USERS_TOTAL_COUNT';
+const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
+const SUBSCRIBE_TO_USER = 'SUBSCRIBE_TO_USER';
+const UNSUBSCRIBE_FROM_USER = 'UNSUBSCRIBE_FROM_USER';
 
 const initialState = {
   pageTitle: 'Find your friends',
+  pageSize: 5,
+  currentPage: 1,
   searchedUser: '',
+  usersTotalCount: 0,
   userList: [],
 };
 
@@ -14,8 +19,21 @@ const usersReducer = (state = initialState, action) => {
     case SET_USERS:
       return {
         ...state,
-        userList: [...state.userList, ...action.payload],
+        userList: action.payload,
       };
+
+    case SET_USERS_TOTAL_COUNT:
+      return {
+        ...state,
+        usersTotalCount: action.payload,
+      };
+
+    case SET_CURRENT_PAGE:
+      return {
+        ...state,
+        currentPage: action.payload,
+      };
+
     case UPDATE_SEARCHED_USER:
       return {
         ...state,
@@ -56,6 +74,16 @@ export default usersReducer;
 export const setUsersAction = (users) => ({
   type: SET_USERS,
   payload: users,
+});
+
+export const setUsersTotalCountAction = (count) => ({
+  type: SET_USERS_TOTAL_COUNT,
+  payload: count,
+});
+
+export const setCurrentPageAction = (pageNumber) => ({
+  type: SET_CURRENT_PAGE,
+  payload: pageNumber,
 });
 
 export const updateSearchedUserAction = (text) => ({
