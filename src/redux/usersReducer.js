@@ -4,14 +4,16 @@ const SET_USERS_TOTAL_COUNT = 'SET_USERS_TOTAL_COUNT';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SUBSCRIBE_TO_USER = 'SUBSCRIBE_TO_USER';
 const UNSUBSCRIBE_FROM_USER = 'UNSUBSCRIBE_FROM_USER';
+const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
 
 const initialState = {
-  pageTitle: 'Find your friends',
+  userList: [],
   pageSize: 5,
   currentPage: 1,
-  searchedUser: '',
   usersTotalCount: 0,
-  userList: [],
+  pageTitle: 'Find your friends',
+  searchedUser: '',
+  isFetching: false,
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -63,6 +65,11 @@ const usersReducer = (state = initialState, action) => {
           };
         }),
       };
+    case TOGGLE_IS_FETCHING:
+      return {
+        ...state,
+        isFetching: action.payload,
+      };
 
     default:
       return state;
@@ -99,4 +106,9 @@ export const subscribeToUserAction = (userId) => ({
 export const unsubscribeFromUserAction = (userId) => ({
   type: UNSUBSCRIBE_FROM_USER,
   payload: userId,
+});
+
+export const toggleIsFetchingAction = (status) => ({
+  type: TOGGLE_IS_FETCHING,
+  payload: status,
 });
