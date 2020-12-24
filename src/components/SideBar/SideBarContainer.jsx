@@ -14,12 +14,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    updateSearchText: (text) => {
-      dispatch(updateSearchTextAction(text));
-    },
-  };
+const mapDispatchToProps = {
+  updateSearchText: updateSearchTextAction,
 };
 
 const SideBarContainer = connect(mapStateToProps, mapDispatchToProps)(SideBar);

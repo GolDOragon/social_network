@@ -23,15 +23,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    sendMessage: () => {
-      dispatch(sendMessageAction());
-    },
-    updateMessageText: (text) => {
-      dispatch(updateMessageAction(text));
-    },
-  };
+const mapDispatchToProps = {
+  sendMessage: sendMessageAction,
+  updateMessageText: updateMessageAction,
 };
 
 const DialoguesContainer = connect(

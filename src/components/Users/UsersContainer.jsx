@@ -26,29 +26,15 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  onChangeText: (name) => {
-    dispatch(updateSearchedUserAction(name));
-  },
-  subscribe: (userId) => {
-    dispatch(subscribeToUserAction(userId));
-  },
-  unsubscribe: (userId) => {
-    dispatch(unsubscribeFromUserAction(userId));
-  },
-  setUsers: (userList) => {
-    dispatch(setUsersAction(userList));
-  },
-  setUsersTotalCount: (count) => {
-    dispatch(setUsersTotalCountAction(count));
-  },
-  setCurrentPage: (pageNumber) => {
-    dispatch(setCurrentPageAction(pageNumber));
-  },
-  toggleIsFetching: (isFetching) => {
-    dispatch(toggleIsFetchingAction(isFetching));
-  },
-});
+const mapDispatchToProps = {
+  onChangeText: updateSearchedUserAction,
+  subscribe: subscribeToUserAction,
+  unsubscribe: unsubscribeFromUserAction,
+  setUsers: setUsersAction,
+  setUsersTotalCount: setUsersTotalCountAction,
+  setCurrentPage: setCurrentPageAction,
+  toggleIsFetching: toggleIsFetchingAction,
+};
 
 class UsersContainer extends React.Component {
   componentDidMount() {
