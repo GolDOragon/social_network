@@ -1,8 +1,10 @@
 export const ADD_POST = 'ADD_POST';
 export const UPDATE_POST_TEXT = 'UPDATE_POST_TEXT';
+export const SET_USER_PROFILE = 'SET_USER_PROFILE';
 
 const initialState = {
   textareaValue: '',
+  profile: null,
   posts: [
     {
       id: 0,
@@ -44,6 +46,12 @@ const profileReducer = (state = initialState, action) => {
         ...state,
         textareaValue: action.payload,
       };
+
+    case SET_USER_PROFILE:
+      return {
+        ...state,
+        profile: action.payload,
+      };
     default:
       return state;
   }
@@ -53,6 +61,10 @@ export const addPostAction = () => ({ type: ADD_POST });
 export const updatePostTextAction = (text) => ({
   type: UPDATE_POST_TEXT,
   payload: text,
+});
+export const setUserProfileAction = (profile) => ({
+  type: SET_USER_PROFILE,
+  payload: profile,
 });
 
 export default profileReducer;

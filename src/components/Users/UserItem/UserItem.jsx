@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import img from '../../../assets/img/default-user.jpg';
 import s from './UserItem.module.css';
 
@@ -12,7 +13,9 @@ const UserItem = (props) => {
   return (
     <li className={s.user}>
       <div className={s.user__avatar}>
-        <img src={iconSrc || img} alt={name} className={s.avatar__icon} />
+        <NavLink to={`/profile/${id}`}>
+          <img src={iconSrc || img} alt={name} className={s.avatar__icon} />
+        </NavLink>
         <button
           className={s.avatar__subscribe}
           onClick={() => handleClickSubscribeButton(id)}
@@ -22,10 +25,7 @@ const UserItem = (props) => {
       </div>
       <div className={s.user__info}>
         <span className={s.info__fullname}>{name}</span>
-        <span className={s.info__location}>
-          {/* {(user.location && user.location.city) || 'None'},{' '}
-                    {(user.location && user.location.country) || 'None'} */}
-        </span>
+        <span className={s.info__location}></span>
       </div>
     </li>
   );
