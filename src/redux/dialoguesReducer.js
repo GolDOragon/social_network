@@ -1,5 +1,5 @@
-export const SEND_MESSAGE = 'SEND_MESSAGE';
-export const UPDATE_MESSAGE = 'UPDATE_MESSAGE';
+const SEND_MESSAGE = 'SEND_MESSAGE';
+const UPDATE_MESSAGE = 'UPDATE_MESSAGE';
 
 const initialState = {
   title: 'All messages',
