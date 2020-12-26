@@ -5,10 +5,14 @@ import s from './Profile.module.css';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 
 const Profile = (props) => {
+  debugger
+  if (!props.profile) {
+    return <Preloader />;
+  }
+
   return (
     <div className={s.content}>
-      {props.profile && <ProfileInfo {...props.profile} />}
-      {!props.profile && <Preloader />}
+      <ProfileInfo {...props.profile} />
       <MyPostsContainer store={props.store} />
     </div>
   );
