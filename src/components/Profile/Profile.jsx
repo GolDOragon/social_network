@@ -5,7 +5,6 @@ import s from './Profile.module.css';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 
 const Profile = (props) => {
-  debugger
   if (!props.profile) {
     return <Preloader />;
   }
