@@ -5,9 +5,6 @@ import s from './NavBar.module.css';
 
 const NavBar = (props) => {
   const { pageList, navbarTitle } = props;
-  const links = pageList.map((pageName) =>
-    pageName.split(' ').join('-').toLowerCase(),
-  );
 
   return (
     <div className={s.navbarContainer}>

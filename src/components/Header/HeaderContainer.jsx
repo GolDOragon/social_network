@@ -1,9 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { authentication } from '../../api/api';
 import {
-  setUserDataAction,
-  toggleFetchingAction
+  authenticationThunk
 } from '../../redux/authReducer';
 import Header from './Header';
 
@@ -14,19 +12,12 @@ const mapStateToProps = (state) => {
   };
 };
 const mapDispatchToProps = {
-  setAuthUserData: setUserDataAction,
-  toggleFetching: toggleFetchingAction,
+  authentication: authenticationThunk,
 };
 
 class HeaderContainer extends React.Component {
   componentDidMount() {
-    this.props.toggleFetching(true);
-    authentication().then((data) => {
-      if (data.resultCode === 0) {
-        this.props.setAuthUserData({ ...data.data });
-        this.props.toggleFetching(false);
-      }
-    });
+    this.props.authentication();
   }
   render() {
     return <Header {...this.props} />;

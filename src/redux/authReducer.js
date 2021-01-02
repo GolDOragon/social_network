@@ -1,3 +1,5 @@
+import { authentication } from '../api/api';
+
 const SET_USER_DATA = 'SET_USER_DATA';
 const TOGGLE_FETCHING = 'TOGGLE_FETCHING';
 
@@ -45,3 +47,14 @@ export const toggleFetchingAction = (status) => ({
   type: TOGGLE_FETCHING,
   payload: status,
 });
+
+export const authenticationThunk = () => (dispatch) => {
+  dispatch(toggleFetchingAction(true));
+
+  authentication().then((data) => {
+    if (data.resultCode === 0) {
+      dispatch(setUserDataAction({ ...data.data }));
+      dispatch(toggleFetchingAction(false));
+    }
+  });
+};

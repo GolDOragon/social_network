@@ -1,10 +1,14 @@
+import { usersAPI } from '../api/api';
+
 const ADD_POST = 'ADD_POST';
 const UPDATE_POST_TEXT = 'UPDATE_POST_TEXT';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
+const TOGGLE_FETCHING = 'TOGGLE_FETCHING';
 
 const initialState = {
   textareaValue: '',
   profile: null,
+  isFetching: false,
   posts: [
     {
       id: 0,
@@ -52,6 +56,13 @@ const profileReducer = (state = initialState, action) => {
         ...state,
         profile: action.payload,
       };
+
+    case TOGGLE_FETCHING:
+      return {
+        ...state,
+        isFetching: action.payload,
+      };
+
     default:
       return state;
   }
@@ -66,5 +77,16 @@ export const setUserProfileAction = (profile) => ({
   type: SET_USER_PROFILE,
   payload: profile,
 });
+export const toggleFetchingAction = (status) => ({
+  type: TOGGLE_FETCHING,
+  payload: status,
+});
 
+export const setUserProfileThunk = (id) => (dispatch) => {
+  dispatch(toggleFetchingAction(true));
+  usersAPI.getProfile(id).then((data) => {
+    dispatch(setUserProfileAction(data));
+    dispatch(toggleFetchingAction(false));
+  });
+};
 export default profileReducer;
