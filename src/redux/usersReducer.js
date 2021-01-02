@@ -5,6 +5,7 @@ const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SUBSCRIBE_TO_USER = 'SUBSCRIBE_TO_USER';
 const UNSUBSCRIBE_FROM_USER = 'UNSUBSCRIBE_FROM_USER';
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
+const SET_SUBSCRIBING = 'SET_SUBSCRIBING';
 
 const initialState = {
   userList: [],
@@ -14,6 +15,7 @@ const initialState = {
   pageTitle: 'Find your friends',
   searchedUser: '',
   isFetching: false,
+  subscriptions: [],
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -71,6 +73,14 @@ const usersReducer = (state = initialState, action) => {
         isFetching: action.payload,
       };
 
+    case SET_SUBSCRIBING:
+      return {
+        ...state,
+        subscriptions: action.isFetching
+          ? [...state.subscriptions, action.userId]
+          : state.subscriptions.filter((id) => id !== action.userId),
+      };
+
     default:
       return state;
   }
@@ -111,4 +121,15 @@ export const unsubscribeFromUserAction = (userId) => ({
 export const toggleIsFetchingAction = (status) => ({
   type: TOGGLE_IS_FETCHING,
   payload: status,
+});
+
+export const setSubscribingAction = (isFetching, userId) => ({
+  type: SET_SUBSCRIBING,
+  isFetching,
+  userId,
+});
+export const toggleSubscribingAction = (isFetching, userId) => ({
+  type: SET_SUBSCRIBING,
+  isFetching,
+  userId,
 });

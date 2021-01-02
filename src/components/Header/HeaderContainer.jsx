@@ -1,6 +1,6 @@
-import Axios from 'axios';
 import React from 'react';
 import { connect } from 'react-redux';
+import { authentication } from '../../api/api';
 import {
   setUserDataAction,
   toggleFetchingAction
@@ -21,11 +21,9 @@ const mapDispatchToProps = {
 class HeaderContainer extends React.Component {
   componentDidMount() {
     this.props.toggleFetching(true);
-    Axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`, {
-      withCredentials: true,
-    }).then((res) => {
-      if (res.data.resultCode === 0) {
-        this.props.setAuthUserData({ ...res.data.data });
+    authentication().then((data) => {
+      if (data.resultCode === 0) {
+        this.props.setAuthUserData({ ...data.data });
         this.props.toggleFetching(false);
       }
     });

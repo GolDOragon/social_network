@@ -1,7 +1,7 @@
-import Axios from 'axios';
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { usersAPI } from '../../api/api';
 import { setUserProfileAction } from '../../redux/profileReducer';
 import Profile from './Profile';
 
@@ -13,10 +13,8 @@ const mapDispatchToProps = {
 class ProfileContainer extends React.Component {
   componentDidMount() {
     const userId = this.props.match.params.userId;
-    Axios.get(
-      `https://social-network.samuraijs.com/api/1.0/profile/${userId}`,
-    ).then((res) => {
-      this.props.setUserProfile(res.data);
+    usersAPI.getProfile(userId).then((data) => {
+      this.props.setUserProfile(data);
     });
   }
 

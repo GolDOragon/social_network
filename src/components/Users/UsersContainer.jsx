@@ -1,8 +1,9 @@
-import Axios from 'axios';
 import React from 'react';
 import { connect } from 'react-redux';
+import { usersAPI } from '../../api/api';
 import {
   setCurrentPageAction,
+  setSubscribingAction,
   setUsersAction,
   setUsersTotalCountAction,
   subscribeToUserAction,
@@ -23,17 +24,19 @@ const mapStateToProps = (state) => {
     userList: usersPage.userList,
     usersTotalCount: usersPage.usersTotalCount,
     isFetching: usersPage.isFetching,
+    subscriptions: usersPage.subscriptions,
   };
 };
 
 const mapDispatchToProps = {
-  onChangeText: updateSearchedUserAction,
+  onChangeSearchText: updateSearchedUserAction,
   subscribe: subscribeToUserAction,
   unsubscribe: unsubscribeFromUserAction,
   setUsers: setUsersAction,
   setUsersTotalCount: setUsersTotalCountAction,
   setCurrentPage: setCurrentPageAction,
   toggleIsFetching: toggleIsFetchingAction,
+  setSubscribing: setSubscribingAction,
 };
 
 class UsersContainer extends React.Component {
@@ -41,34 +44,53 @@ class UsersContainer extends React.Component {
     if (this.props.userList.length !== 0) return;
 
     this.props.toggleIsFetching(true);
-    Axios.get(
-      `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,
-      {
-        withCredentials: true,
-      },
-    ).then((res) => {
-      this.props.setUsers(res.data.items);
-      this.props.setUsersTotalCount(res.data.totalCount);
-      this.props.toggleIsFetching(false);
-    });
+
+    usersAPI
+      .getUsers(this.props.currentPage, this.props.pageSize)
+      .then((data) => {
+        this.props.setUsers(data.items);
+        this.props.setUsersTotalCount(data.totalCount);
+        this.props.toggleIsFetching(false);
+      });
   }
 
   handleChangePage = (pageNumber) => {
     this.props.toggleIsFetching(true);
     this.props.setCurrentPage(pageNumber);
-    Axios.get(
-      `https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`,
-      {
-        withCredentials: true,
-      },
-    ).then((res) => {
-      this.props.setUsers(res.data.items);
-      this.props.setUsersTotalCount(res.data.totalCount);
+
+    usersAPI.getUsers(pageNumber, this.props.pageSize).then((data) => {
+      this.props.setUsers(data.items);
+      this.props.setUsersTotalCount(data.totalCount);
       this.props.toggleIsFetching(false);
     });
   };
 
-  handleChangeSearchText = (text) => {};
+  handleSubscribe = (userId) => {
+    this.props.setSubscribing(true, userId);
+
+    usersAPI.subscribe(userId).then((data) => {
+      if (data.resultCode === 0) {
+        this.props.subscribe(userId);
+        this.props.setSubscribing(false, userId);
+      }
+    });
+  };
+
+  handleUnsubscribe = (userId) => {
+    this.props.setSubscribing(true, userId);
+
+    usersAPI.unsubscribe(userId).then((data) => {
+      if (data.resultCode === 0) {
+        this.props.unsubscribe(userId);
+        this.props.setSubscribing(false, userId);
+      }
+    });
+  };
+
+  handleChangeText = (text) => {
+    this.props.onChangeSearchText(text);
+  };
+
   render = () => {
     return (
       <>
@@ -80,11 +102,13 @@ class UsersContainer extends React.Component {
           title={this.props.title}
           currentPage={this.props.currentPage}
           text={this.props.text}
-          onChangePage={this.handleChangePage}
-          onChangeText={this.props.onChangeText}
-          onSubscribe={this.props.subscribe}
-          onUnsubscribe={this.props.unsubscribe}
           isFetching={this.props.isFetching}
+          subscriptions={this.props.subscriptions}
+          subscribingToUser={this.props.subscribingToUser}
+          onChangePage={this.handleChangePage}
+          onChangeText={this.handleChangeText}
+          onSubscribe={this.handleSubscribe}
+          onUnsubscribe={this.handleUnsubscribe}
         />
       </>
     );

@@ -8,19 +8,6 @@ import s from './Users.module.css';
 const Users = (props) => {
   const pageCount = Math.ceil(props.usersTotalCount / props.pageSize);
 
-  const handleChangePage = (pageNumber) => {
-    props.onChangePage(pageNumber);
-  };
-  const handleSubscribe = (id) => {
-    props.onSubscribe(id);
-  };
-  const handleUnsubscribe = (id) => {
-    props.onUnsubscribe(id);
-  };
-  const handleChangeText = (text) => {
-    props.onChangeText(text);
-  };
-
   return (
     <div className={s.users}>
       <div className={s.users__title}>
@@ -30,14 +17,14 @@ const Users = (props) => {
         <Pagination
           currentPage={props.currentPage}
           pageTotalCount={pageCount}
-          onChangePage={handleChangePage}
+          onChangePage={props.onChangePage}
         />
       </div>
       <main className={s.users__main}>
         <div className={s.users__searchBox}>
           <SearchInput
             text={props.text}
-            onChangeInput={handleChangeText}
+            onChangeInput={props.onChangeText}
             showSearchButton={false}
           />
         </div>
@@ -47,8 +34,9 @@ const Users = (props) => {
               <UserItem
                 key={user.id}
                 {...user}
-                onSubscribe={handleSubscribe}
-                onUnsubscribe={handleUnsubscribe}
+                isDisabled={props.subscriptions.some((id) => user.id === id)}
+                onSubscribe={() => props.onSubscribe(user.id)}
+                onUnsubscribe={() => props.onUnsubscribe(user.id)}
               />
             );
           })}

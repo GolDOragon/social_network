@@ -1,40 +1,10 @@
-import Axios from 'axios';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import img from '../../../assets/img/default-user.jpg';
 import s from './UserItem.module.css';
 
 const UserItem = (props) => {
-  const { iconSrc, name, followed, id } = props;
-
-  const handleSubscribe = (id) => {
-    Axios.post(
-      `https://social-network.samuraijs.com/api/1.0/follow/${id}`,
-      null,
-      {
-        withCredentials: true,
-        headers: {
-          'API-KEY': '86798368-ca86-4eaa-8c39-db3db0a87b46',
-        },
-      },
-    ).then((res) => {
-      if (res.data.resultCode === 0) {
-        props.onSubscribe(id);
-      }
-    });
-  };
-  const handleUnsubscribe = (id) => {
-    Axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${id}`, {
-      withCredentials: true,
-      headers: {
-        'API-KEY': '86798368-ca86-4eaa-8c39-db3db0a87b46',
-      },
-    }).then((res) => {
-      if (res.data.resultCode === 0) {
-        props.onUnsubscribe(id);
-      }
-    });
-  };
+  const { iconSrc, name, followed, id, isDisabled } = props;
 
   return (
     <li className={s.user}>
@@ -44,16 +14,18 @@ const UserItem = (props) => {
         </NavLink>
         {followed && (
           <button
+            disabled={isDisabled}
             className={s.avatar__subscribe}
-            onClick={() => handleUnsubscribe(id)}
+            onClick={props.onUnsubscribe}
           >
             Unsubscribe
           </button>
         )}
         {!followed && (
           <button
+            disabled={isDisabled}
             className={s.avatar__subscribe}
-            onClick={() => handleSubscribe(id)}
+            onClick={props.onSubscribe}
           >
             Subscribe
           </button>
