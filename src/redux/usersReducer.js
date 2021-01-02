@@ -1,3 +1,5 @@
+import { usersAPI } from '../api/api';
+
 const UPDATE_SEARCHED_USER = 'UPDATE_SEARCHED_USER';
 const SET_USERS = 'SET_USERS';
 const SET_USERS_TOTAL_COUNT = 'SET_USERS_TOTAL_COUNT';
@@ -128,8 +130,41 @@ export const setSubscribingAction = (isFetching, userId) => ({
   isFetching,
   userId,
 });
-export const toggleSubscribingAction = (isFetching, userId) => ({
-  type: SET_SUBSCRIBING,
-  isFetching,
-  userId,
-});
+
+
+export const getUsersThunk = (currentPage, pageSize) => (dispatch) => {
+  dispatch(toggleIsFetchingAction(true));
+
+  usersAPI.getUsers(currentPage, pageSize).then((data) => {
+    dispatch(setUsersAction(data.items));
+    dispatch(setUsersTotalCountAction(data.totalCount));
+    dispatch(toggleIsFetchingAction(false));
+  });
+};
+
+export const changePageThunk = (pageNumber, pageSize) => (dispatch) => {
+  dispatch(setCurrentPageAction(pageNumber));
+  dispatch(getUsersThunk(pageNumber, pageSize));
+};
+
+export const subscribeThunk = (userId) => (dispatch) => {
+  dispatch(setSubscribingAction(true, userId));
+
+  usersAPI.subscribe(userId).then((data) => {
+    if (data.resultCode === 0) {
+      dispatch(subscribeToUserAction(userId));
+      dispatch(setSubscribingAction(false, userId));
+    }
+  });
+};
+
+export const unsubscribeThunk = (userId) => (dispatch) => {
+  dispatch(setSubscribingAction(true, userId));
+
+  usersAPI.unsubscribe(userId).then((data) => {
+    if (data.resultCode === 0) {
+      dispatch(unsubscribeFromUserAction(userId));
+      dispatch(setSubscribingAction(false, userId));
+    }
+  });
+};
