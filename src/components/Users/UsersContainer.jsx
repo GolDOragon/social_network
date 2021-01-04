@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
 import {
   changePageThunk,
   getUsersThunk,
@@ -8,6 +9,7 @@ import {
   updateSearchedUserAction
 } from '../../redux/usersReducer';
 import Preloader from '../atoms/Preloader/Preloader';
+import withAuthRedirect from '../HOC/withAuthRedirect';
 import Users from './Users';
 
 const mapStateToProps = (state) => {
@@ -63,4 +65,7 @@ class UsersContainer extends React.Component {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);
+export default compose(
+  withAuthRedirect,
+  connect(mapStateToProps, mapDispatchToProps),
+)(UsersContainer);
