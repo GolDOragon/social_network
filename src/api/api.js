@@ -20,10 +20,32 @@ export const usersAPI = {
   unsubscribe: (id) => {
     return baseRequest.delete('follow/' + id).then((res) => res.data);
   },
+  // how we can replace methods
+  getProfile: (id) => {
+    console.warn('Obsolete method. Please use profileAPI.');
+    return profileAPI.getProfile(id);
+  },
+};
+
+export const profileAPI = {
   getProfile: (id) => {
     return baseRequest.get('profile/' + id).then((res) => {
       return res.data;
     });
+  },
+  getStatus: (id) => {
+    return baseRequest.get('profile/status/' + id).then((res) => {
+      return res.data;
+    });
+  },
+  updateStatus: (status) => {
+    return baseRequest
+      .put('profile/status/', {
+        status,
+      })
+      .then((res) => {
+        return res.data;
+      });
   },
 };
 
