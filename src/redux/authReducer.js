@@ -63,14 +63,14 @@ export const authenticationThunk = () => (dispatch) => {
 export const loginThunk = (userData) => async (dispatch) => {
   dispatch(authAC.toggleFetching(true));
 
-  authAPI.login(userData).then((data) => {
-    if (data.resultCode === 0) {
-      dispatch(authenticationThunk());
-      dispatch(authAC.toggleFetching(false));
-    } else {
-      throw data.messages;
-    }
-  });
+  const data = await authAPI.login(userData);
+
+  if (data.resultCode === 0) {
+    dispatch(authenticationThunk());
+    dispatch(authAC.toggleFetching(false));
+  } else {
+    throw data.messages[0];
+  }
 };
 
 export const logoutThunk = () => (dispatch) => {
