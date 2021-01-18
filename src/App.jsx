@@ -3,7 +3,7 @@ import { Route } from 'react-router-dom';
 import './App.css';
 import DialoguesContainer from './components/Dialogues/DialoguesContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
-import Login from './components/Login/Login';
+import LoginContainer from './components/Login/LoginContainer';
 import MusicContainer from './components/Music/MusicContainer';
 import NewsContainer from './components/News/NewsContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
@@ -19,7 +19,7 @@ const App = (props) => {
       <main className="app-wrapper-content">
         {/* <Route path="/profile" render={() => <Profile />} />
         <Route path="/dialogues" render={() => <DialoguesContainer />} /> */}
-        <Route path="/login" component={Login} />
+        <Route path="/login" component={LoginContainer} />
         <Route path="/profile/:userId?" component={ProfileContainer} />
         <Route path="/dialogues" component={DialoguesContainer} />
         <Route path="/news" component={NewsContainer} />

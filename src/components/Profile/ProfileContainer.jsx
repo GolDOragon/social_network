@@ -12,6 +12,7 @@ import Profile from './Profile';
 const mapStateToProps = (state) => ({
   profile: state.profilePage.profile,
   status: state.profilePage.status,
+  authUser: state.auth.userId,
 });
 const mapDispatchToProps = {
   setUserProfileThunk,
@@ -21,7 +22,7 @@ const mapDispatchToProps = {
 
 class ProfileContainer extends React.Component {
   componentDidMount() {
-    const userId = this.props.match.params.userId || 12567;
+    const userId = this.props.match.params.userId || this.props.authUser;
     this.props.setUserProfileThunk(userId);
     this.props.getUserStatusThunk(userId);
   }

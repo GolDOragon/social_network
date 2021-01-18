@@ -22,7 +22,7 @@ export const usersAPI = {
   },
   // how we can replace methods
   getProfile: (id) => {
-    console.warn('Obsolete method. Please use profileAPI.');
+    console.warn('Obsolete method. Please use profileAPI.getProfile');
     return profileAPI.getProfile(id);
   },
 };
@@ -47,8 +47,28 @@ export const profileAPI = {
         return res.data;
       });
   },
+  setPost: (post) => {
+    return new Promise((resolve) => resolve({ resultCode: 0 }));
+  },
 };
 
 export const authentication = () => {
-  return baseRequest.get('auth/me').then((res) => res.data);
+  console.warn('Obsolete method. Please use authAPI.authentication');
+  return authAPI.authentication();
+};
+
+export const authAPI = {
+  authentication: () => baseRequest.get('auth/me').then((res) => res.data),
+  login: (userData) => {
+    return baseRequest
+      .post('auth/login', {
+        ...userData,
+      })
+      .then((res) => {
+        return res.data;
+      });
+  },
+  logout: () => {
+    return baseRequest.delete('auth/login').then((res) => res.data);
+  },
 };
