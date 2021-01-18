@@ -1,13 +1,11 @@
 import { profileAPI } from '../api/api';
 
-const ADD_POST = 'ADD_POST';
-const UPDATE_POST_TEXT = 'UPDATE_POST_TEXT';
+const SET_POST = 'SET_POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_USER_STATUS = 'SET_USER_STATUS';
 const TOGGLE_FETCHING = 'TOGGLE_FETCHING';
 
 const initialState = {
-  textareaValue: '',
   profile: null,
   isFetching: false,
   status: null,
@@ -32,25 +30,16 @@ const initialState = {
 
 const profileReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_POST:
-      const id = state.posts.length;
-      const message = state.textareaValue;
+    case SET_POST:
       let post = {
-        id,
-        message,
+        id: state.posts.length,
+        message: action.text,
         likeCount: 0,
       };
 
       return {
         ...state,
-        posts: state.posts.concat(post),
-        textareaValue: '',
-      };
-
-    case UPDATE_POST_TEXT:
-      return {
-        ...state,
-        textareaValue: action.text,
+        posts: [post, ...state.posts],
       };
 
     case SET_USER_PROFILE:
@@ -79,11 +68,7 @@ const profileReducer = (state = initialState, action) => {
 export default profileReducer;
 
 export const profileAC = {
-  addPost: () => ({ type: ADD_POST }),
-  updatePostText: (text) => ({
-    type: UPDATE_POST_TEXT,
-    text,
-  }),
+  setPost: (text) => ({ type: SET_POST, text }),
   setUserProfile: (profile) => ({
     type: SET_USER_PROFILE,
     profile,
@@ -115,6 +100,16 @@ export const updateUserStatusThunk = (status) => (dispatch) => {
   profileAPI.updateStatus(status).then((data) => {
     if (data.resultCode === 0) {
       dispatch(profileAC.setUserStatus(status));
+    }
+  });
+};
+
+export const setPostThunk = (text) => (dispatch) => {
+  dispatch(profileAC.toggleFetching(true));
+  profileAPI.setPost(text).then((data) => {
+    if (data.resultCode === 0) {
+      dispatch(profileAC.setPost(text));
+      dispatch(profileAC.toggleFetching(false));
     }
   });
 };

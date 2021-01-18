@@ -1,8 +1,6 @@
 const SEND_MESSAGE = 'SEND_MESSAGE';
-const UPDATE_MESSAGE = 'UPDATE_MESSAGE';
 
 const initialState = {
-  title: 'All messages',
   companionAvatar: {
     iconAltName: 'avatar',
     iconSrc:
@@ -10,7 +8,6 @@ const initialState = {
     name: 'Jason Bourne',
     status: 'online',
   },
-  newMessageText: '',
   companions: [
     {
       id: 1,
@@ -169,7 +166,6 @@ const dialoguesReducer = (state = initialState, action) => {
     case SEND_MESSAGE:
       const calcMessage = (state) => {
         const id = state.messages.length;
-        const text = state.newMessageText;
         return {
           id,
           isMyMessage: true,
@@ -177,7 +173,7 @@ const dialoguesReducer = (state = initialState, action) => {
             'http://www.wpkixx.com/html/winku/images/resources/friend-avatar4.jpg',
           iconAltName: 'Good Boy',
           status: 'offline',
-          text,
+          text: action.message,
         };
       };
 
@@ -185,25 +181,22 @@ const dialoguesReducer = (state = initialState, action) => {
 
       return {
         ...state,
-        // messages: state.messages.concat(newMessage),
         messages: [...state.messages, newMessage],
         newMessageText: '',
       };
 
-    case UPDATE_MESSAGE:
-      return {
-        ...state,
-        newMessageText: action.payload,
-      };
     default:
       return state;
   }
 };
 
-export const sendMessageAction = () => ({ type: SEND_MESSAGE });
-export const updateMessageAction = (text) => ({
-  type: UPDATE_MESSAGE,
-  payload: text,
-});
-
 export default dialoguesReducer;
+
+export const dialoguesAC = {
+  sendMessage: (message) => ({ type: SEND_MESSAGE, message }),
+};
+
+export const sendMessageAction = () => {
+  console.warn('Obsolete method. Please use dialoguesAC.sendMessage');
+  dialoguesAC.sendMessage();
+};

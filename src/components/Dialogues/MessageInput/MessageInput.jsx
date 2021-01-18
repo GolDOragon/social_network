@@ -1,33 +1,38 @@
+import { Form, Formik } from 'formik';
 import React from 'react';
-import s from './MessageInput.module.css';
+import { messageSchema } from '../../../redux/utils/validators';
+import FormikControl from '../../atoms/FormikControl';
+import css from './MessageInput.module.css';
 
 const MessageInput = (props) => {
-  const { newMessageText, sendMessage, updateMessageText } = props;
-
-  const handleChange = (e) => {
-    const text = e.target.value;
-    updateMessageText(text);
-  };
-  const handleClick = () => {
-    sendMessage();
+  const handleSubmit = (obj, { resetForm }) => {
+    props.onSubmit(obj.message);
+    resetForm();
   };
 
   return (
-    <div className={s.messageInput}>
-      <div className={s.messageInput__inputContainer}>
-        <textarea
-          className={s.messageInput__input}
-          rows={5}
-          value={newMessageText}
-          onChange={handleChange}
-        ></textarea>
-      </div>
-      <div className={s.messageInput__sendContainer}>
-        <button className={s.messageInput__send} onClick={handleClick}>
-          Send
-        </button>
-      </div>
-    </div>
+    <Formik
+      initialValues={{ message: '' }}
+      validationSchema={messageSchema}
+      onSubmit={handleSubmit}
+      render={({ errors, touched }) => (
+        <Form className={css.MessageInput}>
+          <div className={css.messageInput__inputContainer}>
+            <FormikControl
+              control="textarea"
+              type="text"
+              name="message"
+              className={css.messageInput__input}
+            />
+          </div>
+          <div className={css.messageInput__sendContainer}>
+            <button className={css.messageInput__send} type="submit">
+              SEND
+            </button>
+          </div>
+        </Form>
+      )}
+    />
   );
 };
 

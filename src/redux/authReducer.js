@@ -1,4 +1,4 @@
-import { authentication } from '../api/api';
+import { authAPI } from '../api/api';
 
 const SET_USER_DATA = 'SET_USER_DATA';
 const TOGGLE_FETCHING = 'TOGGLE_FETCHING';
@@ -18,7 +18,6 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         ...action.payload,
-        isAuth: true,
       };
 
     case TOGGLE_FETCHING:
@@ -34,27 +33,62 @@ const authReducer = (state = initialState, action) => {
 
 export default authReducer;
 
-export const setUserDataAction = ({ id, email, login }) => ({
-  type: SET_USER_DATA,
-  payload: {
-    userId: id,
-    email,
-    login,
-  },
-});
+export const authAC = {
+  setUserData: ({ id, email, login, isAuth = true }) => ({
+    type: SET_USER_DATA,
+    payload: {
+      userId: id,
+      email,
+      login,
+      isAuth,
+    },
+  }),
+  toggleFetching: (status) => ({
+    type: TOGGLE_FETCHING,
+    payload: status,
+  }),
+};
 
-export const toggleFetchingAction = (status) => ({
-  type: TOGGLE_FETCHING,
-  payload: status,
-});
+export const authenticationThunk = () => async (dispatch) => {
+  dispatch(authAC.toggleFetching(true));
 
-export const authenticationThunk = () => (dispatch) => {
-  dispatch(toggleFetchingAction(true));
+  const data = await authAPI.authentication();
 
-  authentication().then((data) => {
+  if (data.resultCode === 0) {
+    dispatch(authAC.setUserData({ ...data.data, isAuth: true }));
+    dispatch(authAC.toggleFetching(false));
+
+    return true;
+  }
+};
+
+export const loginThunk = (userData) => async (dispatch) => {
+  dispatch(authAC.toggleFetching(true));
+
+  const data = await authAPI.login(userData);
+
+  if (data.resultCode === 0) {
+    dispatch(authenticationThunk());
+    dispatch(authAC.toggleFetching(false));
+  } else {
+    throw data.messages[0];
+  }
+};
+
+export const logoutThunk = () => (dispatch) => {
+  dispatch(authAC.toggleFetching(true));
+
+  authAPI.logout().then((data) => {
     if (data.resultCode === 0) {
-      dispatch(setUserDataAction({ ...data.data }));
-      dispatch(toggleFetchingAction(false));
+      dispatch(
+        authAC.setUserData({
+          id: null,
+          email: null,
+          login: null,
+          isAuth: false,
+        }),
+      );
+      dispatch(authAC.toggleFetching(false));
     }
   });
 };

@@ -1,32 +1,17 @@
 import React from 'react';
+import MessageInput from '../../Dialogues/MessageInput/MessageInput';
 import s from './MyPosts.module.css';
-import Post from './Post/Post';
+import Post from './Post';
 
-const MyPosts = (props) => {
-  const { posts, textareaValue } = props;
-
-  const handleAddPost = () => {
-    props.addPost();
-  };
-
-  const handleChangeText = (e) => {
-    let text = e.target.value;
-    props.updatePostText(text);
+const MyPosts = ({ posts, setPost }) => {
+  const handleSetPost = (post) => {
+    setPost(post);
   };
 
   return (
     <div className={s.myPosts}>
       <h2>My posts</h2>
-      <div>
-        <div>
-          <textarea
-            style={{ backgroundColor: 'lightblue' }}
-            value={textareaValue}
-            onChange={handleChangeText}
-          />
-        </div>
-        <button onClick={handleAddPost}>Add Post</button>
-      </div>
+      <MessageInput sendMessage={handleSetPost} />
       <div className={s.posts}>
         {posts.map((post, idx) => (
           <Post {...post} key={`${post.id}${idx}`} />

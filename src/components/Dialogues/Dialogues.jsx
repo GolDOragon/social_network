@@ -2,40 +2,27 @@ import React from 'react';
 import DialoguesList from '../atoms/DialoguesList/DialoguesList';
 import Title from '../atoms/Title/Title';
 import CompanionAvatar from './CompanionAvatar/CompanionAvatar';
-import s from './Dialogues.module.css';
+import css from './Dialogues.module.css';
 import MessageInput from './MessageInput/MessageInput';
 import MessagesList from './MessagesList/MessagesList';
 
-const Dialogues = (props) => {
-  const {
-    title,
-    companions,
-    companionAvatar,
-    messages,
-    newMessageText,
-    sendMessage,
-    updateMessageText,
-  } = props;
+const Dialogues = ({ companions, companionAvatar, messages, sendMessage }) => {
   return (
-    <div className={s.dialogues}>
-      <div className={s.dialogues__title}>
-        <Title text={title} />
+    <div className={css.dialogues}>
+      <div className={css.dialogues__title}>
+        <Title text="All messages" />
       </div>
-      <div className={s.dialogues__aside}>
+      <div className={css.dialogues__aside}>
         <DialoguesList companions={companions} />
       </div>
-      <div className={s.dialogues__avatar}>
+      <div className={css.dialogues__avatar}>
         <CompanionAvatar {...companionAvatar} />
       </div>
-      <div className={s.dialogues__messages}>
+      <div className={css.dialogues__messages}>
         <MessagesList messages={messages} />
       </div>
-      <div className={s.dialogues__input}>
-        <MessageInput
-          newMessageText={newMessageText}
-          sendMessage={sendMessage}
-          updateMessageText={updateMessageText}
-        />
+      <div className={css.dialogues__input}>
+        <MessageInput onSubmit={sendMessage} />
       </div>
     </div>
   );

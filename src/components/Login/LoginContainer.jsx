@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { authenticationThunk } from '../../redux/authReducer';
+import { authenticationThunk, loginThunk } from '../../redux/authReducer';
 import Login from './Login';
 
 const mapStateToProps = (state) => {
@@ -11,6 +11,7 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = {
   authentication: authenticationThunk,
+  login: loginThunk,
 };
 
 class LoginContainer extends React.Component {
