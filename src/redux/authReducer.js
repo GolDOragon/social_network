@@ -49,15 +49,17 @@ export const authAC = {
   }),
 };
 
-export const authenticationThunk = () => (dispatch) => {
+export const authenticationThunk = () => async (dispatch) => {
   dispatch(authAC.toggleFetching(true));
 
-  authAPI.authentication().then((data) => {
-    if (data.resultCode === 0) {
-      dispatch(authAC.setUserData({ ...data.data, isAuth: true }));
-      dispatch(authAC.toggleFetching(false));
-    }
-  });
+  const data = await authAPI.authentication();
+
+  if (data.resultCode === 0) {
+    dispatch(authAC.setUserData({ ...data.data, isAuth: true }));
+    dispatch(authAC.toggleFetching(false));
+
+    return true;
+  }
 };
 
 export const loginThunk = (userData) => async (dispatch) => {

@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {
-  authenticationThunk, logoutThunk
-} from '../../redux/authReducer';
+import { logoutThunk } from '../../redux/authReducer';
 import Header from './Header';
 
 const mapStateToProps = (state) => {
@@ -12,14 +10,10 @@ const mapStateToProps = (state) => {
   };
 };
 const mapDispatchToProps = {
-  authentication: authenticationThunk,
-  logout: logoutThunk
+  logout: logoutThunk,
 };
 
 class HeaderContainer extends React.Component {
-  componentDidMount() {
-    this.props.authentication();
-  }
   render() {
     return <Header {...this.props} />;
   }

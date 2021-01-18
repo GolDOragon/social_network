@@ -23,6 +23,11 @@ const mapDispatchToProps = {
 class ProfileContainer extends React.Component {
   componentDidMount() {
     const userId = this.props.match.params.userId || this.props.authUser;
+
+    if (!userId) {
+      this.props.history.push('/login');
+    }
+
     this.props.setUserProfileThunk(userId);
     this.props.getUserStatusThunk(userId);
   }
