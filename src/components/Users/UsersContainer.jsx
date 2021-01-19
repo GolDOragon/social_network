@@ -8,22 +8,20 @@ import {
   unsubscribeThunk,
   updateSearchedUserAction
 } from '../../redux/usersReducer';
+import usersSelectors from '../../redux/usersSelectors';
 import Preloader from '../atoms/Preloader/Preloader';
 import Users from './Users';
 
-const mapStateToProps = (state) => {
-  const { usersPage } = state;
-  return {
-    title: usersPage.pageTitle,
-    pageSize: usersPage.pageSize,
-    currentPage: usersPage.currentPage,
-    searchedUser: usersPage.searchedUser,
-    userList: usersPage.userList,
-    usersTotalCount: usersPage.usersTotalCount,
-    isFetching: usersPage.isFetching,
-    subscriptions: usersPage.subscriptions,
-  };
-};
+const mapStateToProps = (state) => ({
+  title: usersSelectors.getTitle(state),
+  pageSize: usersSelectors.getPageSize(state),
+  currentPage: usersSelectors.getCurrentPage(state),
+  searchedUser: usersSelectors.getSearchedUser(state),
+  userList: usersSelectors.getUserList(state),
+  usersTotalCount: usersSelectors.getUsersTotalCount(state),
+  isFetching: usersSelectors.getIsFetching(state),
+  subscriptions: usersSelectors.getSubscriptions(state),
+});
 
 const mapDispatchToProps = {
   onChangeSearchText: updateSearchedUserAction,
@@ -64,6 +62,6 @@ class UsersContainer extends React.Component {
   };
 }
 
-export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
-)(UsersContainer);
+export default compose(connect(mapStateToProps, mapDispatchToProps))(
+  UsersContainer,
+);
