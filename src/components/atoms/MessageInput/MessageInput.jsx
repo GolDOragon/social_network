@@ -1,7 +1,7 @@
 import { Form, Formik } from 'formik';
 import React from 'react';
 import { messageSchema } from '../../../redux/utils/validators';
-import FormikControl from '../../atoms/FormikControl';
+import FormikControl from '../FormikControl';
 import css from './MessageInput.module.css';
 
 const MessageInput = (props) => {

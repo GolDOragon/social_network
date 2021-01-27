@@ -1,9 +1,9 @@
 import React from 'react';
 import DialoguesList from '../atoms/DialoguesList/DialoguesList';
+import MessageInput from '../atoms/MessageInput/MessageInput';
 import Title from '../atoms/Title/Title';
 import CompanionAvatar from './CompanionAvatar/CompanionAvatar';
 import css from './Dialogues.module.css';
-import MessageInput from './MessageInput/MessageInput';
 import MessagesList from './MessagesList/MessagesList';
 
 const Dialogues = ({ companions, companionAvatar, messages, sendMessage }) => {

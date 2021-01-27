@@ -1,5 +1,5 @@
 import React from 'react';
-import MessageInput from '../../Dialogues/MessageInput/MessageInput';
+import MessageInput from '../../atoms/MessageInput/MessageInput';
 import s from './MyPosts.module.css';
 import Post from './Post';
 
