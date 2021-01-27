@@ -1,5 +1,5 @@
 import React from 'react';
-import ProfileStatus from '../ProfileStatus/ProfileStatus';
+import ProfileStatusHooks from '../ProfileStatus/ProfileStatusHooks';
 import s from './ProfileInfo.module.css';
 
 const ProfileInfo = (props) => {
@@ -12,7 +12,7 @@ const ProfileInfo = (props) => {
           alt={props.fullName}
         />
         <button>{props.followed ? 'Unfollow' : 'Follow'}</button>
-        <ProfileStatus
+        <ProfileStatusHooks
           status={props.status}
           updateUserStatus={props.updateUserStatus}
         />
