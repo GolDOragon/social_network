@@ -1,7 +1,7 @@
 import { authAPI } from '../api/api';
 
-const SET_USER_DATA = 'SET_USER_DATA';
-const TOGGLE_FETCHING = 'TOGGLE_FETCHING';
+const SET_USER_DATA = 'socialMedia/auth/SET_USER_DATA';
+const TOGGLE_FETCHING = 'socialMedia/auth/TOGGLE_FETCHING';
 
 const initialState = {
   userId: null,
@@ -75,20 +75,20 @@ export const loginThunk = (userData) => async (dispatch) => {
   }
 };
 
-export const logoutThunk = () => (dispatch) => {
+export const logoutThunk = () => async (dispatch) => {
   dispatch(authAC.toggleFetching(true));
 
-  authAPI.logout().then((data) => {
-    if (data.resultCode === 0) {
-      dispatch(
-        authAC.setUserData({
-          id: null,
-          email: null,
-          login: null,
-          isAuth: false,
-        }),
-      );
-      dispatch(authAC.toggleFetching(false));
-    }
-  });
+  const data = await authAPI.logout();
+
+  if (data.resultCode === 0) {
+    dispatch(
+      authAC.setUserData({
+        id: null,
+        email: null,
+        login: null,
+        isAuth: false,
+      }),
+    );
+    dispatch(authAC.toggleFetching(false));
+  }
 };

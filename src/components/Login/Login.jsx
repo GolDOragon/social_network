@@ -5,20 +5,18 @@ import { loginSchema } from '../../redux/utils/validators';
 import FormikControl from '../atoms/FormikControl';
 import css from './Login.module.css';
 
-const LoginForm = (props) => {
-  const handleSubmit = (obj, actions) => {
-    props
-      .onSubmit({
-        ...obj,
-        rememberMe: obj.rememberMe.includes('rememberMe'),
-      })
-      .catch((error) => {
-        actions.setFieldError('serverSide', error);
-        actions.setFieldValue('password', '');
-        actions.setTouched({
-          password: false,
-        });
+const LoginForm = ({ onSubmit }) => {
+  const handleSubmit = (obj, { setFieldError, setFieldValue, setTouched }) => {
+    onSubmit({
+      ...obj,
+      rememberMe: obj.rememberMe.includes('rememberMe'),
+    }).catch((error) => {
+      setFieldError('serverSide', error);
+      setFieldValue('password', '');
+      setTouched({
+        password: false,
       });
+    });
   };
 
   return (
@@ -71,13 +69,13 @@ const LoginForm = (props) => {
   );
 };
 
-const Login = (props) => {
-  if (props.isAuth) return <Redirect to="/profile" />;
+const Login = ({ isAuth, login }) => {
+  if (isAuth) return <Redirect to="/profile" />;
 
   return (
     <div className={css.login}>
       <h2>Login</h2>
-      <LoginForm onSubmit={props.login} />
+      <LoginForm onSubmit={login} />
     </div>
   );
 };

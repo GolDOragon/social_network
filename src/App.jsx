@@ -21,7 +21,6 @@ class App extends React.Component {
   }
 
   render() {
-
     if (!this.props.initialized) return <Preloader />;
 
     return (
@@ -29,8 +28,7 @@ class App extends React.Component {
         <HeaderContainer />
         <SideBarContainer />
         <main className="app-wrapper-content">
-          {/* <Route path="/profile" render={() => <Profile />} />
-        <Route path="/dialogues" render={() => <DialoguesContainer />} /> */}
+          {/* <Route path="/profile" render={() => <Profile />} /> */}
           <Route path="/login" component={LoginContainer} />
           <Route path="/profile/:userId?" component={ProfileContainer} />
           <Route path="/dialogues" component={DialoguesContainer} />

@@ -1,4 +1,4 @@
-const SEND_MESSAGE = 'SEND_MESSAGE';
+const SEND_MESSAGE = 'socialMedia/dialogues/SEND_MESSAGE';
 
 const initialState = {
   companionAvatar: {

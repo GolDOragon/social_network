@@ -1,6 +1,6 @@
 import { authenticationThunk } from './authReducer';
 
-const SET_INITIALIZED = 'SET_INITIALIZED';
+const SET_INITIALIZED = 'socialMedia/app/SET_INITIALIZED';
 
 const initialState = {
   initialized: false,

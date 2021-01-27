@@ -6,7 +6,7 @@ import {
   getUsersThunk,
   subscribeThunk,
   unsubscribeThunk,
-  updateSearchedUserAction
+  usersAC
 } from '../../redux/usersReducer';
 import usersSelectors from '../../redux/usersSelectors';
 import Preloader from '../atoms/Preloader/Preloader';
@@ -24,7 +24,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  onChangeSearchText: updateSearchedUserAction,
+  onChangeSearchText: usersAC.updateSearchedUser,
   onSubscribe: subscribeThunk,
   onUnsubscribe: unsubscribeThunk,
   getUsers: getUsersThunk,
@@ -33,11 +33,13 @@ const mapDispatchToProps = {
 
 class UsersContainer extends React.Component {
   componentDidMount() {
-    this.props.getUsers(this.props.currentPage, this.props.pageSize);
+    const { currentPage, pageSize } = this.props;
+    this.props.getUsers(currentPage, pageSize);
   }
 
   handleChangePage = (pageNumber) => {
-    this.props.onChangePage(pageNumber, this.props.pageSize);
+    const { pageSize } = this.props;
+    this.props.onChangePage(pageNumber, pageSize);
   };
 
   render = () => {

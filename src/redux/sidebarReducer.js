@@ -1,4 +1,4 @@
-const UPDATE_SEARCH_TEXT = 'UPDATE_SEARCH_TEXT';
+const UPDATE_SEARCH_TEXT = 'socialMedia/sidebar/UPDATE_SEARCH_TEXT';
 
 const initialState = {
   searchText: '',

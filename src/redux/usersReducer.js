@@ -1,13 +1,14 @@
 import { usersAPI } from '../api/api';
+import { updateObjectInArray } from './utils/object-helpers';
 
-const UPDATE_SEARCHED_USER = 'UPDATE_SEARCHED_USER';
-const SET_USERS = 'SET_USERS';
-const SET_USERS_TOTAL_COUNT = 'SET_USERS_TOTAL_COUNT';
-const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
-const SUBSCRIBE_TO_USER = 'SUBSCRIBE_TO_USER';
-const UNSUBSCRIBE_FROM_USER = 'UNSUBSCRIBE_FROM_USER';
-const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
-const SET_SUBSCRIBING = 'SET_SUBSCRIBING';
+const UPDATE_SEARCHED_USER = 'socialMedia/users/UPDATE_SEARCHED_USER';
+const SET_USERS = 'socialMedia/users/SET_USERS';
+const SET_USERS_TOTAL_COUNT = 'socialMedia/users/SET_USERS_TOTAL_COUNT';
+const SET_CURRENT_PAGE = 'socialMedia/users/SET_CURRENT_PAGE';
+const SUBSCRIBE_TO_USER = 'socialMedia/users/SUBSCRIBE_TO_USER';
+const UNSUBSCRIBE_FROM_USER = 'socialMedia/users/UNSUBSCRIBE_FROM_USER';
+const TOGGLE_IS_FETCHING = 'socialMedia/users/TOGGLE_IS_FETCHING';
+const SET_SUBSCRIBING = 'socialMedia/users/SET_SUBSCRIBING';
 
 const initialState = {
   userList: [],
@@ -49,24 +50,16 @@ const usersReducer = (state = initialState, action) => {
     case SUBSCRIBE_TO_USER:
       return {
         ...state,
-        userList: state.userList.map((user) => {
-          if (user.id !== action.payload) return user;
-          return {
-            ...user,
-            followed: true,
-          };
+        userList: updateObjectInArray(state.userList, action.userId, 'id', {
+          followed: true,
         }),
       };
 
     case UNSUBSCRIBE_FROM_USER:
       return {
         ...state,
-        userList: state.userList.map((user) => {
-          if (user.id !== action.payload) return user;
-          return {
-            ...user,
-            followed: false,
-          };
+        userList: updateObjectInArray(state.userList, action.userId, 'id', {
+          followed: false,
         }),
       };
     case TOGGLE_IS_FETCHING:
@@ -90,81 +83,88 @@ const usersReducer = (state = initialState, action) => {
 
 export default usersReducer;
 
-export const setUsersAction = (users) => ({
-  type: SET_USERS,
-  payload: users,
-});
+export const usersAC = {
+  setUsers: (users) => ({
+    type: SET_USERS,
+    payload: users,
+  }),
+  setUsersTotalCount: (count) => ({
+    type: SET_USERS_TOTAL_COUNT,
+    payload: count,
+  }),
+  setCurrentPage: (pageNumber) => ({
+    type: SET_CURRENT_PAGE,
+    payload: pageNumber,
+  }),
+  updateSearchedUser: (text) => ({
+    type: UPDATE_SEARCHED_USER,
+    payload: text,
+  }),
+  subscribeToUser: (userId) => ({
+    type: SUBSCRIBE_TO_USER,
+    userId,
+  }),
+  unsubscribeFromUser: (userId) => ({
+    type: UNSUBSCRIBE_FROM_USER,
+    userId,
+  }),
+  toggleIsFetching: (status) => ({
+    type: TOGGLE_IS_FETCHING,
+    payload: status,
+  }),
 
-export const setUsersTotalCountAction = (count) => ({
-  type: SET_USERS_TOTAL_COUNT,
-  payload: count,
-});
+  setSubscribing: (isFetching, userId) => ({
+    type: SET_SUBSCRIBING,
+    isFetching,
+    userId,
+  }),
+};
 
-export const setCurrentPageAction = (pageNumber) => ({
-  type: SET_CURRENT_PAGE,
-  payload: pageNumber,
-});
+export const getUsersThunk = (currentPage, pageSize) => async (dispatch) => {
+  dispatch(usersAC.toggleIsFetching(true));
 
-export const updateSearchedUserAction = (text) => ({
-  type: UPDATE_SEARCHED_USER,
-  payload: text,
-});
+  const data = await usersAPI.getUsers(currentPage, pageSize);
 
-export const subscribeToUserAction = (userId) => ({
-  type: SUBSCRIBE_TO_USER,
-  payload: userId,
-});
-
-export const unsubscribeFromUserAction = (userId) => ({
-  type: UNSUBSCRIBE_FROM_USER,
-  payload: userId,
-});
-
-export const toggleIsFetchingAction = (status) => ({
-  type: TOGGLE_IS_FETCHING,
-  payload: status,
-});
-
-export const setSubscribingAction = (isFetching, userId) => ({
-  type: SET_SUBSCRIBING,
-  isFetching,
-  userId,
-});
-
-
-export const getUsersThunk = (currentPage, pageSize) => (dispatch) => {
-  dispatch(toggleIsFetchingAction(true));
-
-  usersAPI.getUsers(currentPage, pageSize).then((data) => {
-    dispatch(setUsersAction(data.items));
-    dispatch(setUsersTotalCountAction(data.totalCount));
-    dispatch(toggleIsFetchingAction(false));
-  });
+  dispatch(usersAC.setUsers(data.items));
+  dispatch(usersAC.setUsersTotalCount(data.totalCount));
+  dispatch(usersAC.toggleIsFetching(false));
 };
 
 export const changePageThunk = (pageNumber, pageSize) => (dispatch) => {
-  dispatch(setCurrentPageAction(pageNumber));
+  dispatch(usersAC.setCurrentPage(pageNumber));
   dispatch(getUsersThunk(pageNumber, pageSize));
 };
 
-export const subscribeThunk = (userId) => (dispatch) => {
-  dispatch(setSubscribingAction(true, userId));
+const _followUnfollowFlow = async (
+  dispatch,
+  userId,
+  apiMethod,
+  actionCreator,
+) => {
+  dispatch(usersAC.setSubscribing(true, userId));
 
-  usersAPI.subscribe(userId).then((data) => {
-    if (data.resultCode === 0) {
-      dispatch(subscribeToUserAction(userId));
-      dispatch(setSubscribingAction(false, userId));
-    }
-  });
+  const data = await apiMethod(userId);
+
+  if (data.resultCode === 0) {
+    dispatch(actionCreator(userId));
+    dispatch(usersAC.setSubscribing(false, userId));
+  }
 };
 
-export const unsubscribeThunk = (userId) => (dispatch) => {
-  dispatch(setSubscribingAction(true, userId));
+export const subscribeThunk = (userId) => async (dispatch) => {
+  _followUnfollowFlow(
+    dispatch,
+    userId,
+    usersAPI.subscribe.bind(usersAPI),
+    usersAC.subscribeToUser.bind(usersAC),
+  );
+};
 
-  usersAPI.unsubscribe(userId).then((data) => {
-    if (data.resultCode === 0) {
-      dispatch(unsubscribeFromUserAction(userId));
-      dispatch(setSubscribingAction(false, userId));
-    }
-  });
+export const unsubscribeThunk = (userId) => async (dispatch) => {
+  _followUnfollowFlow(
+    dispatch,
+    userId,
+    usersAPI.unsubscribe.bind(usersAPI),
+    usersAC.unsubscribeFromUser.bind(usersAC),
+  );
 };

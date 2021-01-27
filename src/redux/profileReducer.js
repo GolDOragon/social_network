@@ -1,9 +1,9 @@
 import { profileAPI } from '../api/api';
 
-const SET_POST = 'SET_POST';
-const SET_USER_PROFILE = 'SET_USER_PROFILE';
-const SET_USER_STATUS = 'SET_USER_STATUS';
-const TOGGLE_FETCHING = 'TOGGLE_FETCHING';
+const SET_POST = 'social_media/profile/SET_POST';
+const SET_USER_PROFILE = 'social_media/profile/SET_USER_PROFILE';
+const SET_USER_STATUS = 'social_media/profile/SET_USER_STATUS';
+const TOGGLE_FETCHING = 'social_media/profile/TOGGLE_FETCHING';
 
 const initialState = {
   profile: null,
@@ -83,33 +83,33 @@ export const profileAC = {
   }),
 };
 
-export const setUserProfileThunk = (id) => (dispatch) => {
+export const setUserProfileThunk = (id) => async (dispatch) => {
   dispatch(profileAC.toggleFetching(true));
-  profileAPI.getProfile(id).then((data) => {
-    dispatch(profileAC.setUserProfile(data));
-    dispatch(profileAC.toggleFetching(false));
-  });
+
+  const data = await profileAPI.getProfile(id);
+
+  dispatch(profileAC.setUserProfile(data));
+  dispatch(profileAC.toggleFetching(false));
 };
 
-export const getUserStatusThunk = (id) => (dispatch) => {
-  profileAPI.getStatus(id).then((status) => {
+export const getUserStatusThunk = (id) => async (dispatch) => {
+  const status = await profileAPI.getStatus(id);
+  dispatch(profileAC.setUserStatus(status));
+};
+export const updateUserStatusThunk = (status) => async (dispatch) => {
+  const data = await profileAPI.updateStatus(status);
+  if (data.resultCode === 0) {
     dispatch(profileAC.setUserStatus(status));
-  });
-};
-export const updateUserStatusThunk = (status) => (dispatch) => {
-  profileAPI.updateStatus(status).then((data) => {
-    if (data.resultCode === 0) {
-      dispatch(profileAC.setUserStatus(status));
-    }
-  });
+  }
 };
 
-export const setPostThunk = (text) => (dispatch) => {
+export const setPostThunk = (text) => async (dispatch) => {
   dispatch(profileAC.toggleFetching(true));
-  profileAPI.setPost(text).then((data) => {
-    if (data.resultCode === 0) {
-      dispatch(profileAC.setPost(text));
-      dispatch(profileAC.toggleFetching(false));
-    }
-  });
+
+  const data = await profileAPI.setPost(text);
+
+  if (data.resultCode === 0) {
+    dispatch(profileAC.setPost(text));
+    dispatch(profileAC.toggleFetching(false));
+  }
 };
