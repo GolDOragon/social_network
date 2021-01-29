@@ -2,11 +2,17 @@ import React from 'react';
 import s from './Pagination.module.css';
 import PaginationButton from './PaginationButton/PaginationButton';
 
-const Pagination = (props) => {
-  const { currentPage, pageTotalCount, sliceValue = 10 } = props;
+const Pagination = ({
+  itemsTotalCount,
+  itemsPerPage,
+  currentPage,
+  onChangePage,
+  sliceValue = 10,
+}) => {
+  const pageTotalCount = Math.ceil(itemsTotalCount / itemsPerPage);
 
   const handleClick = (pageNumber) => {
-    props.onChangePage(pageNumber);
+    onChangePage(pageNumber);
   };
 
   const getPageNumbers = (current, total, slice) => {

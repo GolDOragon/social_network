@@ -6,7 +6,6 @@ import UserItem from './UserItem/UserItem';
 import s from './Users.module.css';
 
 const Users = (props) => {
-  const pageCount = Math.ceil(props.usersTotalCount / props.pageSize);
 
   return (
     <div className={s.users}>
@@ -15,8 +14,9 @@ const Users = (props) => {
       </div>
       <div className={s.users__pagination}>
         <Pagination
+          itemsTotalCount={props.usersTotalCount}
+          itemsPerPage={props.pageSize}
           currentPage={props.currentPage}
-          pageTotalCount={pageCount}
           onChangePage={props.onChangePage}
         />
       </div>
