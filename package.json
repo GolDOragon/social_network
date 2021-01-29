@@ -31,6 +31,8 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "prettier": "^2.2.0"
+    "@types/react-test-renderer": "^17.0.0",
+    "prettier": "^2.2.0",
+    "react-test-renderer": "^17.0.1"
   }
 }
