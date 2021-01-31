@@ -1,23 +1,23 @@
 import React from 'react';
-import Pagination from '../atoms/Pagination/Pagination';
 import SearchInput from '../atoms/SearchInput/SearchInput';
 import Title from '../atoms/Title/Title';
+import Paginator from '../common/molecules/Paginator/Paginator';
 import UserItem from './UserItem/UserItem';
 import s from './Users.module.css';
 
 const Users = (props) => {
-  const pageCount = Math.ceil(props.usersTotalCount / props.pageSize);
-
   return (
     <div className={s.users}>
       <div className={s.users__title}>
         <Title text={props.title} />
       </div>
-      <div className={s.users__pagination}>
-        <Pagination
+      <div className={s.users__paginator}>
+        <Paginator
+          totalItemsCount={props.usersTotalCount}
           currentPage={props.currentPage}
-          pageTotalCount={pageCount}
-          onChangePage={props.onChangePage}
+          itemsPerPage={props.pageSize}
+          onPageChanged={props.onChangePage}
+          sliceSize={10}
         />
       </div>
       <main className={s.users__main}>
