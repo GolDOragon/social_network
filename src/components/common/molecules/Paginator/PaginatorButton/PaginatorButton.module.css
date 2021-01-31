@@ -1,0 +1,6 @@
+.paginator__button {
+}
+
+.paginator__button.paginator__button_disabled {
+  background-color: red;
+}
