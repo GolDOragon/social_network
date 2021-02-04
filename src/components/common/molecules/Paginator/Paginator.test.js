@@ -163,6 +163,7 @@ describe('Paginator', () => {
 
           expect(prevButton).toBeDefined();
           expect(() => {
+            // eslint-disable-next-line no-unused-vars
             const nextButton = root.findByProps({ children: 'Next' });
           }).toThrow();
         });
@@ -182,6 +183,7 @@ describe('Paginator', () => {
 
           expect(nextButton).toBeDefined();
           expect(() => {
+            // eslint-disable-next-line no-unused-vars
             const prevButton = root.findByProps({ children: 'Prev' });
           }).toThrow();
         });
